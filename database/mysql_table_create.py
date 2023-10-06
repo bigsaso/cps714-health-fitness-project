@@ -1,6 +1,5 @@
 import mysql.connector
 from mysql.connector import errorcode
-import json
 
 DB_NAME = "Fitness"
 
@@ -12,8 +11,11 @@ def create_database(cursor):
         print("Failed creating database: {}".format(err))
         exit(1)
 
-with open("config.json", "r") as jsonfile:
-    config = json.load(jsonfile)
+config = {
+  'user': 'root',
+  'password': 'Cps714password',
+  'host': '127.0.0.1',
+}
 
 try:
     cnx = mysql.connector.connect(**config)
