@@ -1,0 +1,135 @@
+[
+    {
+        "id": 0,
+        "type": "Steps",
+        "format": {
+            "type": "SimpleInputFormat",
+            "questions": [
+                {
+                    "unit": "steps",
+                    "prompt": "How many steps have you taken?",
+                    "name": "steps",
+                    "inputType": "number"
+                }
+            ],
+            "labels": {
+                "date": "Date:",
+                "add": "Submit Data"
+            }
+        }
+    },
+    {
+        "id": 1,
+        "type": "Calorie Intake",
+        "format": {
+            "type": "SimpleInputFormat",
+            "questions": [
+                {
+                    "unit": "calories",
+                    "prompt": "How many calories have you consumed?",
+                    "name": "calories",
+                    "inputType": "number"
+                },
+                {
+                    "unit": "grams",
+                    "prompt": "How much fat have you consumed?",
+                    "name": "fat",
+                    "inputType": "number"
+                },
+                {
+                    "unit": "grams",
+                    "prompt": "How many carbohydrates have you consumed?",
+                    "name": "carbs",
+                    "inputType": "number"
+                },
+                {
+                    "unit": "grams",
+                    "prompt": "How much protein have you consumed?",
+                    "name": "protein",
+                    "inputType": "number"
+                }
+            ],
+            "labels": {
+                "date": "Date:",
+                "add": "Submit Data"
+            }
+        }
+    },
+    {
+        "id": 2,
+        "type": "Sleep Tracking",
+        "format": {
+            "type": "SimpleInputFormat",
+            "questions": [
+                {
+                    "unit": "hours",
+                    "prompt": "How many hours did you sleep?",
+                    "name": "hoursOfSleep",
+                    "inputType": "number"
+                }
+            ],
+            "labels": {
+                "date": "Date:",
+                "add": "Submit Data"
+            }
+        }
+    },
+    {
+        "id": 3,
+        "type": "Exercise",
+        "format": {
+            "type": "SimpleInputFormat",
+            "questions": [
+                {
+                    "unit": "",
+                    "prompt": "Exercise Name:",
+                    "name": "name",
+                    "inputType": "text"
+                },
+                {
+                    "unit": "reps",
+                    "prompt": "Number of repetitions:",
+                    "name": "reps",
+                    "inputType": "number"
+                },
+                {
+                    "unit": "sets",
+                    "prompt": "Number of sets done:",
+                    "name": "sets",
+                    "inputType": "number"
+                }
+            ],
+            "labels": {
+                "date": "Date:",
+                "add": "Submit Data"
+            }
+        }
+    },
+    {
+        "id": 4,
+        "type": "Mood",
+        "format": {
+            "type": "SliderFormat",
+            "questions": [
+                {
+                    "prompt": "How happy are you?",
+                    "lowLabel": "Unhappy",
+                    "highLabel": "Very Happy",
+                    "name": "happiness",
+                    "inputType": "range"
+                },
+                {
+                    "prompt": "How motivated are you?",
+                    "lowLabel": "Not Motivated",
+                    "highLabel": "Very Motivated",
+                    "name": "motivation",
+                    "inputType": "range"
+                }
+            ],
+            "labels": {
+                "date": "Date:",
+                "add": "Submit Data"
+            }
+        }
+    }
+]
