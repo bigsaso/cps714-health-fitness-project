@@ -14,13 +14,13 @@ db_config = {
 
 
 # Function to check user credentials
-def check_credentials(username, password):
+def check_credentials(email, password):
     try:
         db = mysql.connector.connect(**db_config)
         cursor = db.cursor()
 
-        query = 'SELECT * FROM users WHERE username =%s AND password =%s'
-        cursor.execute(query, (username, password))
+        query = 'SELECT * FROM User WHERE email =%s AND password =%s'
+        cursor.execute(query, (email, password))
 
         result = cursor.fetchone()
 
@@ -42,7 +42,7 @@ def get_users():
         cursor = db.cursor(dictionary=True)
 
         # Execute a query to retrieve all users
-        query = "SELECT * FROM users"
+        query = "SELECT * FROM User"
         cursor.execute(query)
 
         users = cursor.fetchall()
@@ -54,15 +54,15 @@ def get_users():
     finally:
         cursor.close()
 
-@blueprint.route('/login', methods=['GET'])
+@blueprint.route('/login', methods=['POST'])
 def login():
-    username = request.args.get('username')
-    password = request.args.get('password')
+    email = request.args.get('Email')
+    password = request.args.get('Password')
 
-    if not username or not password:
-        return jsonify({"message": "Username and password are required."}), 400
+    if not email or not password:
+        return jsonify({"message": "Email and password are required."}), 400
 
-    if check_credentials(username, password):
+    if check_credentials(email, password):
         return jsonify({"message": "Login successful."}), 200
     else:
         return jsonify({"message": "Login failed. Invalid credentials."}), 401
@@ -72,17 +72,17 @@ def populate_database():
     try:
         # Dummy data for username and password
         dummy_data = [
-            ("user1", "password1"),
-            ("user2", "password2"),
-            ("user3", "password3"),
+            ("John", "Doe", "test@testing.com", 20, 5.7, 160.0, 'password'),
+            ("Zach", "Fong", "zachf@testing.com", 24, 5.8, 150.0, 'password1'),
+            ("Tom", "Ford", "tf@testing.com", 30, 5.9, 180.0, 'password2')
         ]
         db = mysql.connector.connect(**db_config)
         cursor = db.cursor()
 
-        # Insert dummy data into the users table
-        for username, password in dummy_data:
-            query = "INSERT INTO users (username, password) VALUES (%s, %s)"
-            cursor.execute(query, (username, password))
+        # Insert dummy data into the User table
+        for FirstName, LastName, Email, Age, Height, Weight, Password in dummy_data:
+            query = "INSERT INTO User (FirstName, LastName, Email, Age, Height, Weight, Password) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(query, (FirstName, LastName, Email, Age, Height, Weight, Password))
 
         db.commit()
 
