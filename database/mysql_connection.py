@@ -1,27 +1,41 @@
 import mysql.connector
 from mysql.connector import errorcode
-import json
+from decouple import config
 
-with open("config.json", "r") as jsonfile:
-    config = json.load(jsonfile)
+def mysql_connect():
+    try:
+        db_host = config('DB_HOST')
+        db_user = config('DB_USER')
+        db_password = config('DB_PASSWORD')
+        db_database = config('DB_DATABASE')
 
-try:
-    cnx = mysql.connector.connect(**config)
-except mysql.connector.Error as err:
-  if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-    print("Something is wrong with your user name or password")
-  elif err.errno == errorcode.ER_BAD_DB_ERROR:
-    print("Database does not exist")
-  else:
-    print(err)
+        cnx = mysql.connector.connect(
+            host=db_host,
+            user=db_user,
+            password=db_password,
+            database=db_database
+        )
+        cursor = cnx.cursor()
+        return cnx, cursor
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+        return None, None
 
-cursor = cnx.cursor() 
+# Create a connection and cursor
+cnx, cursor = mysql_connect()
 
-while True:
-  query = input("Enter Query (type q to leave):\n")
-  if query.lower() == 'q': break
-  cursor.execute(query)
-  for results in cursor.fetchall():
-    print(results)
+if cnx and cursor:
+    while True:
+        query = input("Enter Query (type q to leave):\n")
+        if query.lower() == 'q':
+            break
+        cursor.execute(query)
+        for results in cursor.fetchall():
+            print(results)
 
-cnx.close() 
+    cnx.close()
