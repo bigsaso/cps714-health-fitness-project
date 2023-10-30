@@ -32,7 +32,7 @@ def add_steps():
         return jsonify({"error": str(e)})
 
 # Retrieve Step Number Data
-@step_tracker_api.route('/add_steps/<int:userId>', methods=['GET'])
+@step_tracker_api.route('/get_steps/<int:userId>', methods=['GET'])
 def get_sleep_data(userId):
     try:
         cursor = mysql.connection.cursor()
