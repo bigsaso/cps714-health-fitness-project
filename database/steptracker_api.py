@@ -13,7 +13,7 @@ def connect_to_database():
     )
     return db
 
-# Add Sleep Data
+# Add Step Number Data
 @step_tracker_api.route('/add_steps', methods=['POST'])
 def add_steps():
     try:
@@ -31,7 +31,7 @@ def add_steps():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-# Retrieve Sleep Data
+# Retrieve Step Number Data
 @step_tracker_api.route('/add_steps/<int:userId>', methods=['GET'])
 def get_sleep_data(userId):
     try:
