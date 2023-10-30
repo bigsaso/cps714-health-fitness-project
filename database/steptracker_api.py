@@ -23,7 +23,7 @@ def add_steps():
         
 
         cursor = mysql.connection.cursor()
-        cursor.execute("INSERT INTO StepTracker (NumSteps, UserID) VALUES (%s, %s, %s)", (numSteps, userId))
+        cursor.execute("INSERT INTO StepTracker (NumSteps, UserID) VALUES (%s, %s)", (numSteps, userId))
         mysql.connection.commit()
         cursor.close()
 
