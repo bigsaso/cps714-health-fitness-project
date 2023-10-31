@@ -3,7 +3,7 @@ from flask import Flask
 from blueprints.basic_endpoints import blueprint as basic_endpoints
 from blueprints.jinja_endpoint import blueprint as jinja_template_blueprint
 from blueprints.login_endpoints import blueprint as login
-from sleep_data_api import blueprint as sleep_data_api
+from blueprints.sleep_data_api import blueprint as sleep_data_api
 
 app = Flask(__name__)
 app.register_blueprint(basic_endpoints)
