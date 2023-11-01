@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 from flask import Blueprint
 import mysql.connector
 from mysql.connector import errorcode
+# to have path visible to import the connect function
+import sys
+sys.path.append(sys.path[0][:-len('\\backend')] + '/database')
+from mysql_connection import mysql_connect
 
 exercise_api = Blueprint('exercise_api', __name__)
 
@@ -11,10 +15,9 @@ def add_exercise():
         repetitions = request.json['repetitions']
         numSets = request.json['numsets']
         exerciseName = request.json['exercisename']
-        db = connect_to_database()
 
-        cursor = db.cursor()
-        
+        db, cursor = mysql_connect()
+                
         query = "INSERT INTO ExerciseLog (Repetitions, NumSets, ExerciseName) VALUES (%s, %s, %s)"
         values = (repetitions, numSets, exerciseName)
         cursor.execute(query, values)
@@ -28,9 +31,7 @@ def add_exercise():
 def get_exercise():
     try:
         exercise_id = request.json['exerciseid']
-        db = connect_to_database()
-
-        cursor = db.cursor()
+        db, cursor = mysql_connect()
         
         query = "SELECT * WHERE ExerciseID = %s"
         values = (exercise_id)
@@ -42,22 +43,3 @@ def get_exercise():
     except Exception as e:
         return jsonify({"error": str(e)}), 400        
         
-def connect_to_database():
-    data = {
-        # to be changed -> read from file later or preconnect to db.
-    "user": "root",
-    "password": "Cps714password",
-    "host": "127.0.0.1",
-    "database": "Fitness"
-    }
-    try:
-        cnx = mysql.connector.connect(**data)
-    except mysql.connector.Error as err:
-        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Something is wrong with your user name or password")
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Database does not exist")
-        else:
-            print(err)
-    
-    return cnx
