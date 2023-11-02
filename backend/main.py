@@ -13,7 +13,7 @@ app.register_blueprint(jinja_template_blueprint)
 app.register_blueprint(login)
 app.register_blueprint(sleep_data_api)
 app.register_blueprint(steptracker_api)
-app.register_blurprint(mood_api)
+app.register_blueprint(mood_api)
 
 if __name__ == "__main__":
     app.run()

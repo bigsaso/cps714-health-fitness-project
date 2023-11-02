@@ -18,7 +18,7 @@ def connect_to_database():
     
     return db
 
-@mood_api.route('/get_user_mood/<int:user_id>', methods = ['GET'])
+@blueprint.route('/get_user_mood/<int:user_id>', methods = ['GET'])
 def get_user_mood(user_id):
     try:
         db = connect_to_database()
@@ -39,7 +39,7 @@ def get_user_mood(user_id):
             db.close()
             cursor.close()
 
-@mood_api.route('/add_user_mood', methods=['POST'])
+@blueprint.route('/add_user_mood', methods=['POST'])
 def add_user_mood():
     try:
         user_id = request.json['user_id']
