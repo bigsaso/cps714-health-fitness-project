@@ -61,5 +61,7 @@ CREATE TABLE ExerciseLog (
     ExerciseID INT AUTO_INCREMENT PRIMARY KEY,
     Repetitions INT,
     NumSets INT,
-    ExerciseName VARCHAR(255) NOT NULL
+    UserID INT,
+    ExerciseName VARCHAR(255) NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
 )
