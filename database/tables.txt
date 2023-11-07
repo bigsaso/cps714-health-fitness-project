@@ -71,4 +71,4 @@ CREATE TABLE ExerciseLog (
     ExerciseName VARCHAR(255) NOT NULL,
     Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
-)
+);
