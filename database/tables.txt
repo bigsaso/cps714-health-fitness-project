@@ -14,6 +14,7 @@ CREATE TABLE Diet (
     DietID INT AUTO_INCREMENT PRIMARY KEY,
     DietName VARCHAR(255) NOT NULL,
     UserID INT,
+    Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
@@ -22,6 +23,7 @@ CREATE TABLE Goals (
     WeightGoal DECIMAL(5, 2),
     DailyCalorieBurn INT,
     UserID INT,
+    Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
@@ -29,6 +31,7 @@ CREATE TABLE Mood (
     MoodID INT AUTO_INCREMENT PRIMARY KEY,
     MoodScale INT,
     UserID INT,
+    Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
@@ -39,6 +42,7 @@ CREATE TABLE CalorieIntake (
     Fat INT,
     Protein INT,
     UserID INT,
+    Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
@@ -46,6 +50,7 @@ CREATE TABLE StepTracker (
     StepTrackerID INT AUTO_INCREMENT PRIMARY KEY,
     NumSteps INT,
     UserID INT,
+    Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
@@ -54,6 +59,7 @@ CREATE TABLE SleepData (
     HoursSlept DECIMAL(4, 2),
     NumDaysTracked INT,
     UserID INT,
+    Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
@@ -61,5 +67,6 @@ CREATE TABLE ExerciseLog (
     ExerciseID INT AUTO_INCREMENT PRIMARY KEY,
     Repetitions INT,
     NumSets INT,
+    Time DATETIME NOT NULL,
     ExerciseName VARCHAR(255) NOT NULL
 )
