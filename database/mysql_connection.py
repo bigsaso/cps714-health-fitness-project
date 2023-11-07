@@ -29,13 +29,14 @@ def mysql_connect():
 # Create a connection and cursor
 cnx, cursor = mysql_connect()
 
-if cnx and cursor:
-    while True:
-        query = input("Enter Query (type q to leave):\n")
-        if query.lower() == 'q':
-            break
-        cursor.execute(query)
-        for results in cursor.fetchall():
-            print(results)
+if __name__ == "__main__":
+    if cnx and cursor:
+        while True:
+            query = input("Enter Query (type q to leave):\n")
+            if query.lower() == 'q':
+                break
+            cursor.execute(query)
+            for results in cursor.fetchall():
+                print(results)
 
-    cnx.close()
+        cnx.close()
