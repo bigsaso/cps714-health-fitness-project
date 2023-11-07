@@ -72,9 +72,9 @@ def populate_database():
     try:
         # Dummy data for username and password
         dummy_data = [
-            ("John", "Doe", "test@testing.com", 20, 5.7, 160.0, 'password'),
-            ("Zach", "Fong", "zachf@testing.com", 24, 5.8, 150.0, 'password1'),
-            ("Tom", "Ford", "tf@testing.com", 30, 5.9, 180.0, 'password2')
+            ("John", "Doe", "test@testing.com", 20, 5.7, 160.0, 'password','abcdabcdabcdabcd'),
+            ("Zach", "Fong", "zachf@testing.com", 24, 5.8, 150.0, 'password1','wxyzwxyzwxyzwxyz'),
+            ("Tom", "Ford", "tf@testing.com", 30, 5.9, 180.0, 'password2','lmnoplmnoplmnoplmnop')
         ]
         db = mysql.connector.connect(**db_config)
         cursor = db.cursor()
