@@ -41,7 +41,7 @@ def add_user_mood():
     except Exception as e:
         return jsonify({'error': str(e)})
     
-@blueprint.route('/update_user_mood', methods=['POST'])
+@blueprint.route('/update_user_mood', methods=['PUT'])
 def update_user_mood():
     try:
         user_id = request.json['user_id']
