@@ -1,43 +1,31 @@
-from flask import Blueprint, jsonify, request
+from flask import Flask, request, jsonify
+from flask import Blueprint
 import mysql.connector
+from mysql.connector import errorcode
+import sys
+sys.path.append(sys.path[0][:-len('\\backend')] + '/database')
+from mysql_connection import mysql_connect
 
 blueprint = Blueprint('mood_api', __name__, url_prefix='/mood_api')
 
-def connect_to_database():
-    database_config = {
-        "host": "127.0.0.1",
-        "user": "root",
-        "password": "Cps714password",
-        "database": "Fitness"
-    }
-
-    try:
-        db = mysql.connector.connect(**database_config)
-    except Error as e:
-        return jsonify({'error': str(e)})
-    
-    return db
-
-@blueprint.route('/get_user_mood/<int:user_id>', methods = ['GET'])
+@blueprint.route('/get_user_mood/<int:user_id>', methods=['GET'])
 def get_user_mood(user_id):
     try:
-        db = connect_to_database()
-        cursor = db.cursor()
+        db = mysql_connect()
+        cursor = mysql_connect()
 
-        query = "SELECT * FROM Mood WHERE UserID = %s"
+        query = "SELECT MoodScale, UserID FROM Mood WHERE UserID = %s"
         cursor.execute(query, user_id)
         user_mood = cursor.fetchall()
+        cursor.close()
+        db.close()
 
         if not user_mood:
-            return jsonify({"message": "Error, no user mood data found"}), 400
+            return jsonify({"message": "Error, no user mood data found"}), 404
         
-        return jsonify({'user_mood': user_mood})
+        return jsonify({'user_mood': user_mood}), 200
     except Exception as e:
         return jsonify({'error': str(e)})
-    finally:
-        if db:
-            db.close()
-            cursor.close()
 
 @blueprint.route('/add_user_mood', methods=['POST'])
 def add_user_mood():
@@ -45,7 +33,8 @@ def add_user_mood():
         user_id = request.json['user_id']
         mood_scale = request.json['mood_scale']
 
-        db = connect_to_database()
+        db = mysql_connect()
+        cursor = mysql_connect()
         cursor = db.cursor()
 
         query = "INSERT INTO Mood (MoodScale, UserID) VALUES (%s, %s)"
@@ -53,11 +42,10 @@ def add_user_mood():
         cursor.execute(query, data)
 
         db.commit()
+        cursor.close()
+        db.close()
 
-        return jsonify({"message": "Mood added successfully."}), 200
+        return jsonify({"message": "Mood added successfully."})
+    
     except Exception as e:
         return jsonify({'error': str(e)})
-    finally:
-        if db:
-            db.close()
-            cursor.close()
