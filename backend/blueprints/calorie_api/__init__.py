@@ -59,7 +59,8 @@ def update_calorie_intake():
         fat = request.json['fat']
         protein = request.json['protein']
         date = request.json['date']
-
+        date_update = request.json['date_update']
+        
         db, cursor = mysql_connect()
 
         query = "SELECT CalorieTrackID FROM CalorieIntake WHERE userid = %s and Time = %s"
@@ -67,8 +68,8 @@ def update_calorie_intake():
         cursor.execute(query, values)
         calorie_track_id = cursor.fetchone()[0]
 
-        query = "UPDATE CalorieIntake SET CalorieAmount = %s, Carbonhydrate = %s, Fat = %s, Protein = %s WHERE CalorieTrackID = %s"
-        values = (calorie_amount, carbohydrate, fat, protein, calorie_track_id)
+        query = "UPDATE CalorieIntake SET CalorieAmount = %s, Carbonhydrate = %s, Fat = %s, Protein = %s, Time = %s WHERE CalorieTrackID = %s"
+        values = (calorie_amount, carbohydrate, fat, protein, date_update, calorie_track_id)
         cursor.execute(query, values)
         cursor.close()
         db.commit()
