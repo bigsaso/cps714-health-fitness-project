@@ -1,6 +1,11 @@
 # blueprints/login_endpoints/__init__.py
 from flask import Blueprint, jsonify, request
 import mysql.connector
+from mysql.connector import errorcode
+# to have path visible to import the connect function
+import sys
+sys.path.append(sys.path[0][:-len('\\backend')] + '/database')
+from mysql_connection import mysql_connect
 
 blueprint = Blueprint('login_api', __name__, url_prefix='/login_api')
 
@@ -21,14 +26,12 @@ def login():
         if not email:
             return jsonify({'error': 'Email is required'}), 400
         
-        conn = mysql.connector.connect(**db_config)
-        cursor = conn.cursor()
+        db, cursor = mysql_connect()
         query = "SELECT Email, Password, Salt FROM User WHERE email = %s"
         cursor.execute(query, (email,))
 
         user_data = cursor.fetchone()
         cursor.close()
-        conn.close()
 
         if user_data:
             password = user_data[1]
@@ -39,13 +42,6 @@ def login():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-
-    #if not email or not password:
-        #return jsonify({"message": "Email and password are required."}), 400
-
-    #return check_credentials(email, password)
-    #else:
-        #return jsonify({"message": "Login failed. Invalid credentials."}), 401
     
 @blueprint.route('/populate_database', methods=['GET'])
 def populate_database():
@@ -56,8 +52,7 @@ def populate_database():
             ("Zach", "Fong", "zachf@testing.com", 24, 5.8, 150.0, 'password1','wxyzwxyzwxyzwxyz'),
             ("Tom", "Ford", "tf@testing.com", 30, 5.9, 180.0, 'password2','lmnoplmnoplmnopl')
         ]
-        db = mysql.connector.connect(**db_config)
-        cursor = db.cursor()
+        db,cursor = mysql_connect()
 
         # Insert dummy data into the User table
         for FirstName, LastName, Email, Age, Height, Weight, Password, Salt in dummy_data:
@@ -76,8 +71,7 @@ def populate_database():
 @blueprint.route('/get_users', methods=['GET'])
 def get_users():
     try:
-        db = mysql.connector.connect(**db_config)
-        cursor = db.cursor(dictionary=True)
+        db, cursor = mysql_connect()
 
         # Execute a query to retrieve all users
         query = "SELECT * FROM User"
