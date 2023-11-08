@@ -13,7 +13,7 @@ def get_user_mood(user_id):
         db, cursor = mysql_connect()
 
         query = "SELECT * FROM Mood WHERE UserID = %s"
-        cursor.execute(query, user_id)
+        cursor.execute(query, (user_id,))
         user_mood = cursor.fetchall()
         cursor.close()
         
@@ -25,13 +25,14 @@ def get_user_mood(user_id):
 def add_user_mood():
     try:
         user_id = request.json['user_id']
-        mood_scale = request.json['mood_scale']
+        user_happiness = request.json['user_happiness']
+        user_motivation = request.json['user_motivation']
         date = request.json['date']
 
         db, cursor = mysql_connect()
 
-        query = "INSERT INTO Mood (MoodScale, UserID, Time) VALUES (%s, %s, %s)"
-        data = (mood_scale, user_id, date)
+        query = "INSERT INTO Mood (Happiness, Motivation, UserID, Time) VALUES (%s, %s, %s,%s)"
+        data = (user_happiness, user_motivation, user_id, date)
         cursor.execute(query, data)
         
         cursor.close()
@@ -45,13 +46,14 @@ def add_user_mood():
 def update_user_mood():
     try:
         user_id = request.json['user_id']
-        mood_scale = request.json['mood_scale']
+        user_happiness = request.json['user_happiness']
+        user_motivation = request.json['user_motivation']
         date = request.json['date']
 
         db, cursor = mysql_connect()
         
-        query = "UPDATE Mood SET MoodScale = %s, Time = %s WHERE UserID = %s"
-        data = (mood_scale, date, user_id)
+        query = "UPDATE Mood SET Happiness = %s, Motivation = %s, Time = %s WHERE UserID = %s"
+        data = (user_happiness, user_motivation, date, user_id)
         cursor.execute(query, data)
         
         cursor.close()
