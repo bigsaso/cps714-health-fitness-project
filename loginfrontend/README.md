@@ -1,4 +1,4 @@
-# frontend
+# fitnesslogin
 
 ## Project setup
 ```
