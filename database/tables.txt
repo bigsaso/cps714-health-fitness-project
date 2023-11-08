@@ -29,7 +29,8 @@ CREATE TABLE Goals (
 
 CREATE TABLE Mood (
     MoodID INT AUTO_INCREMENT PRIMARY KEY,
-    MoodScale INT,
+    Happiness INT,
+    Motivation INT,
     UserID INT,
     Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
@@ -71,4 +72,4 @@ CREATE TABLE ExerciseLog (
     ExerciseName VARCHAR(255) NOT NULL,
     Time DATETIME NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID)
-)
+);
