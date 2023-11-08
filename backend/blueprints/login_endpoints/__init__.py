@@ -12,39 +12,6 @@ db_config = {
     "database": "Fitness"  # Change to your database name
 }
 
-
-# Function to check user credentials
-def check_credentials(email, attempt):
-    try:
-        db = mysql.connector.connect(**db_config)
-        cursor = db.cursor()
-
-        query = 'SELECT * FROM User WHERE email =%s'
-        cursor.execute(query, (email))
-
-        result = cursor.fetchone()
-
-        if result:
-            password, salt = result
-            return jsonify({
-            "message": "OK",
-            "email": "",
-            "password": password,
-            "salt": salt, 
-            "attempted_password": attempt,}), 200
-        else:
-            return jsonify({
-            "message": "No Email Found",
-            "email": "email",
-            "password": '',
-            "salt": '', 
-            "attempted_password": attempt,}), 400
-    except Exception as e:
-        print("Error:", e)
-    finally:
-        if db:
-            db.close()
-
 @blueprint.route('/login', methods=['POST'])
 def login():
     try:
