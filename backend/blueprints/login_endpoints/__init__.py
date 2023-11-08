@@ -56,7 +56,7 @@ def login():
         
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
-        query = "SELECT * FROM User WHERE email = %s"
+        query = "SELECT Email, Password, Salt FROM User WHERE email = %s"
         cursor.execute(query, (email,))
 
         user_data = cursor.fetchone()
