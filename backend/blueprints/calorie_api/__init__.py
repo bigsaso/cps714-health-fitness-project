@@ -73,6 +73,6 @@ def update_calorie_intake():
         cursor.close()
         db.commit()
 
-        return jsonify({"message": "Exercise updated successfully."}), 200
+        return jsonify({"message": "Calorie intake updated!"}), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 400   
