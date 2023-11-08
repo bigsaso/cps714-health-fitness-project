@@ -21,7 +21,7 @@ def add_calorie_intake():
         
         db, cursor = mysql_connect()
         
-        query = "INSERT INTO CalorieIntake (CalorieAmount, Carbonhydrate, Fat, Protein, UserID, Time) VALUES (%s, %s, %s, %s, %s)"
+        query = "INSERT INTO CalorieIntake (CalorieAmount, Carbonhydrate, Fat, Protein, UserID, Time) VALUES (%s, %s, %s, %s, %s, %s)"
         values = (calorie_amount, carbohydrate, fat, protein, user_id, date)
         cursor.execute(query, values)
         cursor.close()
