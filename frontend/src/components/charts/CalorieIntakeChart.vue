@@ -1,0 +1,71 @@
+<template>
+    <header>
+        <h2>Your calorie, fat, carb, and protein intake over the past week</h2>
+        <canvas id="calorieChart"></canvas>
+    </header>
+</template>
+
+<script>
+    import Chart from 'chart.js/auto';
+    import axios from 'axios';
+    import calorieIntakeChartData from '../../scripts/charts/CalorieIntakeChartData';
+
+    export default {
+        name: 'CalorieIntakeChart',
+        data() {
+            return {
+                calorieIntakeChartData: calorieIntakeChartData
+            }
+        },
+        async mounted() {
+            let userData = await axios.get("http://localhost:5000/calorie_api/get_calorie_intake/5").catch(function(error) {
+                console.log(error);
+            });
+            if (userData != undefined) {
+                let dataList = userData.data["calorie data"]; //list of data for user n
+                let datasets = calorieIntakeChartData.data.datasets;
+                datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
+                datasets[1].data = [0, 0, 0, 0, 0, 0, 0];
+                datasets[2].data = [0, 0, 0, 0, 0, 0, 0];
+                datasets[3].data = [0, 0, 0, 0, 0, 0, 0];
+
+                Date.prototype.subtractDays = function(days) {
+                    var date = new Date(this.valueOf());
+                    date.setDate(date.getDate() - days);
+                    return date;
+                }
+
+                var today = new Date();
+                let listOfDates = [];
+                let dateLabels = [];
+                for (let i = 0; i < 7; i++) {
+                    let dayToUse = today.subtractDays(i);
+                    listOfDates[7 - 1 - i] = dayToUse.toLocaleDateString();
+                    dateLabels[7 - 1 - i] = dayToUse.toLocaleString('default', { month: 'long', day: 'numeric' })
+                }
+
+                for (let i in dataList) {
+                    let packet = dataList[i];
+                    let dataSendDate = new Date(packet["Time"]);
+                    if (dataSendDate == null) {
+                        continue;
+                    }
+                    let formattedDataSendDate = (dataSendDate.getUTCMonth() + 1) + "/" + dataSendDate.getUTCDate() + "/" + dataSendDate.getUTCFullYear();
+                    let index = listOfDates.indexOf(formattedDataSendDate);
+                    if (index != -1) {
+                        datasets[0].data[index] += packet["CalorieAmount"];
+                        datasets[1].data[index] += packet["Fat"];
+                        datasets[2].data[index] += packet["Carbohydrate"];
+                        datasets[3].data[index] += packet["Protein"];
+                    }
+                }
+
+                dateLabels[5] = "Yesterday (" + dateLabels[5] + ")";
+                dateLabels[6] = "Today (" + dateLabels[6] + ")";
+                calorieIntakeChartData.data.labels = dateLabels;
+            }
+            const ctx = document.getElementById('calorieChart');
+            new Chart(ctx, this.calorieIntakeChartData);
+        }
+    }
+</script>
