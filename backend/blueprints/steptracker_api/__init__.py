@@ -7,6 +7,8 @@ from mysql_connection import mysql_connect
 
 blueprint = Blueprint('steptracker_api', __name__, url_prefix='/steptracker_api')
 
+
+
 @blueprint.route('/add_num_steps', methods=['POST'])
 def add_num_steps():
     try:
@@ -25,16 +27,16 @@ def add_num_steps():
     except Exception as e:
         return jsonify({"error": str(e)})
 
-@blueprint.route('/get_num_steps/<int:userId>/<string:date>', methods=['GET'])
-def get_num_steps(userId, date):
+@blueprint.route('/get_num_steps/<int:userId>', methods=['GET'])
+def get_num_steps(userId):
     try:
+
         connection, cursor = mysql_connect()
-        cursor.execute("SELECT NumSteps, Time FROM StepTracker WHERE UserID = %s AND Time = %s", (userId, date))
+        cursor.execute("SELECT * FROM StepTracker WHERE UserID = %s", (userId,))
         data = cursor.fetchall()
         cursor.close()
         
         return jsonify(data)
-        
     except Exception as e:
         return jsonify({"error": str(e)})
 
