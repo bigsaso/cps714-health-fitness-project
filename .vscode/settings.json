@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "C:\\python\\python310\\lib\\site-packages",
+        "./database"
+    ]
+}
