@@ -1,4 +1,22 @@
 import { createApp } from 'vue'
+import { createRouter, createWebHistory } from 'vue-router'
+import 'bootstrap/dist/css/bootstrap.min.css'
 import App from './App.vue'
 
-createApp(App).mount('#app')
+import MyLanding from './components/landing-page/Landing.vue';
+import DataInputPage from './components/data-input/DataInputPage.vue';
+import UserAuthentication from './components/user-authentication/UserAuthentication.vue';
+
+const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+        { path: '/dashboard', component: MyLanding },
+        { path: '/update-progress', component: DataInputPage },
+        { path: '/', component: UserAuthentication }
+    ]
+});
+
+const app = createApp(App)
+
+app.use(router);
+app.mount('#app');

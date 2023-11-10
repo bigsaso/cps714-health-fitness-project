@@ -83,9 +83,18 @@ password: this.password
 //     console.log(error.response.data);
 // }
     
-axios
-          .post('http://127.0.0.1:5000/login_api/login?Email=zachf@testing.com&Password=Password1', data, {headers: {'Content-Type': 'application/json'}})
-          .then((response) => console.log(response))   
+axios.post('http://127.0.0.1:5000/login_api/login?Email=zachf@testing.com&Password=Password1', data, {headers: {'Content-Type': 'application/json'}})
+     .then((response) => {
+        console.log(response);
+
+        //link to dashboard
+        if (response.status === 200) {
+            let link = document.createElement('a');
+            link.href = "/dashboard";
+            link.click();
+        }
+        //-----------------
+    });
 
           console.log(data);
 
@@ -96,7 +105,7 @@ axios
 </script>
 
 
-<style>
+<style scoped>
 
 .container{
     width : 100%;

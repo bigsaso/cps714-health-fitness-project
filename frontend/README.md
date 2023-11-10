@@ -1,24 +1,13 @@
-# frontend
+# Frontend setup instructions
 
-## Project setup
-```
-npm install
-```
+To set up the frontend project, navigate to this folder (.../frontend) in cmd or terminal and run `npm install`
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+To run the frontend, run `npm run serve` and go to http://localhost:8080/
+This automatically compiles and re-runs if you make any changes to the code.
 
+<!--
 ### Compiles and minifies for production
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+-->

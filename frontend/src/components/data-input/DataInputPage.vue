@@ -4,6 +4,8 @@
         <InputChoices @open-input-box="openInputBox" :inputs="inputs"/>
         <br><br><br><br>
         <InputBox :currentInputType="currentInputType" :inputList="inputs"/>
+        <br><br><br><br><br><br>
+        <a href="/dashboard"><button>Back</button></a>
     </header>
 </template>
 

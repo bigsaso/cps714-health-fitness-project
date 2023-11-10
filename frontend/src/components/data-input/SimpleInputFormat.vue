@@ -91,4 +91,8 @@
     div {
         display: inline;
     }
+
+    input {
+        display: inline;
+    }
 </style>
