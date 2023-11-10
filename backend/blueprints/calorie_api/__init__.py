@@ -35,12 +35,13 @@ def add_calorie_intake():
 
 
 @blueprint.route('/get_calorie_intake/<int:user_id>', methods=['GET'])
-def get_calorie_intake(userid):
+def get_calorie_intake(user_id):
     try:       
         db, cursor = mysql_connect()
         
-        query = "SELECT * FROM CalorieIntake WHERE UserID = %s"
-        cursor.execute(query, userid)
+        query = "SELECT * FROM calorieintake WHERE UserID = %s"
+        values = (user_id,)
+        cursor.execute(query, values)
         calorie_intake = cursor.fetchall()
         cursor.close()
         
