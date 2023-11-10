@@ -6,17 +6,17 @@
   
 
   <script>
-  import Chart from 'chart.js/auto'
-  import dailyStepsData from '../DailySteps-data.js'
+  import Chart from 'chart.js/auto';
+  import dailyStepsData from '../../scripts/charts/DailySteps-data.js';
   
   export default {
     name: 'DailyStepsChart',
-    data(){
+    data() {
         return{
             dailyStepsData: dailyStepsData
         }
     },
-    mounted(){
+    mounted() {
         const ctx = document.getElementById('daily-steps');
         new Chart(ctx,this.dailyStepsData);
     }

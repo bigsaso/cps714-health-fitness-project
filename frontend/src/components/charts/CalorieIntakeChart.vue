@@ -22,7 +22,7 @@
                 console.log(error);
             });
             if (userData != undefined) {
-                let dataList = userData.data["calorie data"]; //list of data for user n
+                let dataList = userData.data; //list of data for user n
                 let datasets = calorieIntakeChartData.data.datasets;
                 datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
                 datasets[1].data = [0, 0, 0, 0, 0, 0, 0];
@@ -46,17 +46,17 @@
 
                 for (let i in dataList) {
                     let packet = dataList[i];
-                    let dataSendDate = new Date(packet["Time"]);
+                    let dataSendDate = new Date(packet[6]);
                     if (dataSendDate == null) {
                         continue;
                     }
                     let formattedDataSendDate = (dataSendDate.getUTCMonth() + 1) + "/" + dataSendDate.getUTCDate() + "/" + dataSendDate.getUTCFullYear();
                     let index = listOfDates.indexOf(formattedDataSendDate);
                     if (index != -1) {
-                        datasets[0].data[index] += packet["CalorieAmount"];
-                        datasets[1].data[index] += packet["Fat"];
-                        datasets[2].data[index] += packet["Carbohydrate"];
-                        datasets[3].data[index] += packet["Protein"];
+                        datasets[0].data[index] += packet[1]; //calories
+                        datasets[1].data[index] += packet[3]; //fat
+                        datasets[2].data[index] += packet[2]; //carbs
+                        datasets[3].data[index] += packet[4]; //protein
                     }
                 }
 

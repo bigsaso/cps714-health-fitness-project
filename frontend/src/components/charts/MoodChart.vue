@@ -20,7 +20,7 @@
         async mounted() {
             let userData = await axios.get("http://localhost:5000/mood_api/get_user_mood/5").catch(function(error) {
                 console.log(error);
-            });console.log(userData);
+            });
             if (userData != undefined) {
                 let dataList = userData.data["user_mood"]; //list of data for user n
                 let datasets = moodChartData.data.datasets;
@@ -44,15 +44,15 @@
 
                 for (let i in dataList) {
                     let packet = dataList[i];
-                    let dataSendDate = new Date(packet[3]);
+                    let dataSendDate = new Date(packet[4]);
                     if (dataSendDate == null) {
                         continue;
                     }
                     let formattedDataSendDate = (dataSendDate.getUTCMonth() + 1) + "/" + dataSendDate.getUTCDate() + "/" + dataSendDate.getUTCFullYear();
                     let index = listOfDates.indexOf(formattedDataSendDate);
                     if (index != -1) {
-                        datasets[0].data[index] += packet[2]; //happiness
-                        //datasets[1].data[index] += packet[]; //motivation
+                        datasets[0].data[index] = packet[1]; //happiness
+                        datasets[1].data[index] = packet[2]; //motivation
                     }
                 }
 

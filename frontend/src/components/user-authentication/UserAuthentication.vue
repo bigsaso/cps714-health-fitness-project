@@ -21,8 +21,8 @@
 
 <script>
 /* eslint-disable vue/no-unused-components */
-import signIn from './components/signIn.vue';
-import signUp from './components/signUp.vue';
+import signIn from './signIn.vue';
+import signUp from './signUp.vue';
 
 
 

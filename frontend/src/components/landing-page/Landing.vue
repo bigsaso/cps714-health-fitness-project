@@ -14,22 +14,22 @@
       <ul class="nav flex-column">
         <li class="nav-item">
           <div class = "top-buffer"></div>
-           <a class="nav-link" href="#DataInput"><span class="mb-1 h4">Update Progress</span></a>
+           <a class="nav-link" href="/update-progress"><span class="mb-1 h4">Update Progress</span></a>
         </li>
 
         <li class="nav-item">
           <div class = "top-buffer"></div>
-            <a class="nav-link" href="#Progress"><span class="mb-1 h4">See Progress</span></a>
+            <a class="nav-link" href="/dashboard"><span class="mb-1 h4">See Progress</span></a>
         </li>
 
         <li class="nav-item">
           <div class = "top-buffer"></div>
-            <a class="nav-link" href="#Share"><span class="mb-1 h4">Share</span></a>
+            <a class="nav-link" href="/dashboard"><span class="mb-1 h4">Share</span></a>
         </li>
 
         <li class="nav-item">
           <div class = "top-buffer"></div>
-            <a class="nav-link" href="#Login"><span class="mb-1 h4">Logout</span></a>
+            <a class="nav-link" href="/"><span class="mb-1 h4">Logout</span></a>
         </li>
       </ul>
     </div>
@@ -150,8 +150,8 @@
 
 <script>
 import axios from 'axios';
-import DailyStepsChart from './DailyStepsChart.vue';
-import SleepChart from './SleepTrackChart.vue';
+import DailyStepsChart from '../charts/DailyStepsChart.vue';
+import SleepChart from '../charts/SleepTrackChart.vue';
 export default{
 
     name:'MyLanding', 

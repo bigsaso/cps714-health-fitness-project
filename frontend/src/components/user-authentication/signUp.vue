@@ -104,10 +104,19 @@ password: this.password
 
 
 
-axios
-          .post('http://127.0.0.1:5000/create_account_api/create_account', data, {headers: {'Content-Type': 'application/json'}})
-             .then((response) => this.posts = response.data)   
-            .catch(error =>  {
+axios.post('http://127.0.0.1:5000/create_account_api/create_account', data, {headers: {'Content-Type': 'application/json'}})
+     .then((response) => {
+        console.log(response);
+
+        //link to dashboard
+        if (response.status === 200) {
+            let link = document.createElement('a');
+            link.href = "/dashboard";
+            link.click();
+        }
+        //-----------------
+    })
+    .catch(error =>  {
   
 
 
@@ -143,7 +152,7 @@ axios
 </script>
 
 
-<style>
+<style scoped>
 
 .container{
     width : 100%;
