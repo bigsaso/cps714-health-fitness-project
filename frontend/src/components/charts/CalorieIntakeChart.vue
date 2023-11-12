@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h2>Your calorie, fat, carb, and protein intake over the past week</h2>
+        <h6>Your calorie, fat, carb, and protein intake over the past week</h6>
         <canvas id="calorieChart"></canvas>
     </header>
 </template>
@@ -18,7 +18,8 @@
             }
         },
         async mounted() {
-            let userData = await axios.get("http://localhost:5000/calorie_api/get_calorie_intake/5").catch(function(error) {
+            let currentuser = 9;
+            let userData = await axios.get(`http://localhost:5000/calorie_api/get_calorie_intake/${currentuser}`).catch(function(error) {
                 console.log(error);
             });
             if (userData != undefined) {

@@ -64,10 +64,8 @@
 
               <!-- Today's steps data -->
               <div class = "col border">
-                <h4>Steps today</h4>
-                <tr v-for="step in steps" v-bind:key = "step.id">
-                          <td>{{ step[0] }}</td>  
-                </tr>
+                
+                <todayStep />
               </div>
 
               <!-- Current calorie data -->
@@ -84,10 +82,7 @@
 
               <!-- Macronutrient data  -->
               <div class = "col border">
-                <h4>Macronutrients</h4>
-                <p>Carbs = 320g</p> 
-                <p>Fat = 50g</p> 
-                <p>Protein = 160g</p> 
+                <todayMacros />
               </div>
               
             </div>
@@ -124,10 +119,12 @@
               </div>
             <!-- Need to fix sleep chart formatting -->
             <div class = "row">
-                <div class =chart-wrapper-sleep>
-                  <SleepChart/>
+                <div class = top-buffer></div>
+                <div class =chart-wrapper>
+                  <CalorieIntakeChart/>
                 </div>
             </div>
+
 
       </div>
 
@@ -151,20 +148,28 @@
 <script>
 import axios from 'axios';
 import DailyStepsChart from '../charts/DailyStepsChart.vue';
-import SleepChart from '../charts/SleepTrackChart.vue';
+//import SleepChart from '../charts/SleepTrackChart.vue';
+import CalorieIntakeChart from '../charts/CalorieIntakeChart.vue';
+import todayMacros from './TodayMacros.vue';
+import todayStep from './TodaySteps.vue';
+
 export default{
 
     name:'MyLanding', 
     components:{
-      SleepChart,
-      DailyStepsChart
+      
+      DailyStepsChart,
+      todayStep,
+      CalorieIntakeChart,
+      todayMacros
     },
 
     
     data(){
       return{
         steps : [],
-        workoutlist : []
+        workoutlist : [],
+     
       };
     },
     async mounted(){
@@ -177,11 +182,16 @@ export default{
       //});
 
       //Userid is hard coded for now, when testing change last digit on link with userid
-      axios.get("http://127.0.0.1:5000/steptracker_api/get_num_steps/9").then(response => this.steps = response.data)
-
-      axios.get("http://127.0.0.1:5000/get_exercise/9").then(response => this.workoutlist = response.data)
+      let currentuser = 9;
       
-       
+      axios.get(`http://127.0.0.1:5000/steptracker_api/get_num_steps/${currentuser}`).then(response => this.steps = response.data)
+
+      axios.get(`http://127.0.0.1:5000/get_exercise/${currentuser}`).then(response => this.workoutlist = response.data)
+      
+      
+       var today = new Date();
+       console.log(today);
+
 
       
 
@@ -203,16 +213,14 @@ export default{
 }
 
 .chart-wrapper {
-  border: 1px solid blue;
+ 
   height: 300px;
   width: 600px;
 }
 
-.chart-wrapper-sleep {
-  
-  height: 200px;
-  width: 600px;
-}
-
 .top-buffer{margin-top:20px;}
+
+.tab {
+        tab-size: 4;
+    }
 </style>
