@@ -21,6 +21,7 @@ def create_account():
     lastName = data.get('last_name')
     email = data.get('email')
     password = data.get('password')
+    salt = data.get('salt')
 
     db = connect_to_database()
     cursor = db.cursor()
@@ -32,8 +33,8 @@ def create_account():
     if existing_user:
         return jsonify({'error': 'Email already in use'}), 400
 
-    cursor.execute("INSERT INTO User (FirstName, LastName, Email, Password) VALUES (%s, %s, %s, %s)",
-                   (firstName, lastName, email, password))
+    cursor.execute("INSERT INTO User (FirstName, LastName, Email, Password, Salt) VALUES (%s, %s, %s, %s, %s)",
+                   (firstName, lastName, email, password, salt))
     db.commit()
     cursor.close()
     db.close()

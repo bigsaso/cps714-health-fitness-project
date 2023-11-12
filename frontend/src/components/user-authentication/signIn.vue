@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios'
+import { checkPassword } from './hash';
 
   export default {
       name: 'signIn',
@@ -83,20 +84,25 @@ password: this.password
 //     console.log(error.response.data);
 // }
     
-axios.post('http://127.0.0.1:5000/login_api/login?Email=zachf@testing.com&Password=Password1', data, {headers: {'Content-Type': 'application/json'}})
+axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {headers: {'Content-Type': 'application/json'}})
      .then((response) => {
         console.log(response);
-
+        
         //link to dashboard
-        if (response.status === 200) {
-            let link = document.createElement('a');
-            link.href = "/dashboard";
-            link.click();
+        
+        if(checkPassword(data.password, response.data.password, response.data.salt)) {
+            if (response.status === 200) {
+                let link = document.createElement('a');
+                link.href = "/dashboard";
+                link.click();
+            }
+        } else {
+            console.log("Password was not valid")
         }
         //-----------------
     });
 
-          console.log(data);
+          console.log(data.email);
 
       }
   }

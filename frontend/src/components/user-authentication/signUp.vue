@@ -63,6 +63,7 @@
 <script>
 
 import axios from 'axios'
+import { generateSalt, getHashedPassword } from './hash';
 
   export default {
       name: 'signUp',
@@ -75,6 +76,7 @@ first_name: '',
 last_name : '',
 email: '',
 password: '',
+salt: '',
  posts: []
 
 
@@ -91,13 +93,14 @@ password: '',
 methods:{
  async handleSubmit(){
 
-
+let salt = generateSalt();
 
 const data = {
 first_name: this.first_name,
 last_name : this.last_name,
 email: this.email,
-password: this.password
+password: getHashedPassword(this.password, salt),
+salt: salt
 };
 
 
@@ -109,7 +112,7 @@ axios.post('http://127.0.0.1:5000/create_account_api/create_account', data, {hea
         console.log(response);
 
         //link to dashboard
-        if (response.status === 200) {
+        if (response.status === 201) {
             let link = document.createElement('a');
             link.href = "/dashboard";
             link.click();
