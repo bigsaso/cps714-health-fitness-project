@@ -20,8 +20,7 @@ db_config = {
 @blueprint.route('/login', methods=['POST'])
 def login():
     try:
-        email = request.args.get('Email')
-        attempt = request.args.get('Password')
+        email = request.get_json().get('email')
 
         if not email:
             return jsonify({'error': 'Email is required'}), 400
@@ -37,8 +36,8 @@ def login():
             password = user_data[1]
             salt = user_data[2]
             return jsonify({
-                "message": "Login successful.",'email': email, 
-                'password': password, 'salt':salt, "attempt":attempt}), 200
+                "message": "User details successfully retrieved.",'email': email, 
+                'password': password, 'salt':salt}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
