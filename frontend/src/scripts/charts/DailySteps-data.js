@@ -1,11 +1,11 @@
 export const dailyStepsData = {
     type: "line",
     data: {
-      labels: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      labels: ["October 23", "October 24", "October 25", "October 26", "October 27", "Yesterday", "Today"],
       datasets: [
         {
           label: "Steps Progress",
-          data: [10000,9000,8800,4000,6700,5000,4300],
+          data: [0,0,0,0,0,0,0],
           backgroundColor: "rgba(54,73,93,.5)",
           borderColor: "#36495d",
           borderWidth: 3
