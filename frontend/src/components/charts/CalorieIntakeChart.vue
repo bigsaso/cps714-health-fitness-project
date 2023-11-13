@@ -18,7 +18,7 @@
             }
         },
         async mounted() {
-            let currentuser = 9;
+            let currentuser = 1;
             let userData = await axios.get(`http://localhost:5000/calorie_api/get_calorie_intake/${currentuser}`).catch(function(error) {
                 console.log(error);
             });

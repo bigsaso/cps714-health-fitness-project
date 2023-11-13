@@ -1,8 +1,8 @@
 <template>
     <h4> Today's Macronutrients </h4>
-    <p>{{finalcarbs}}g</p>
-    <p>{{finalfat}}g</p>
-    <p>{{finalprotein}}g</p>
+    <p>Carbs :{{finalcarbs}}g</p>
+    <p>Fat :{{finalfat}}g</p>
+    <p>Protein:{{finalprotein}}g</p>
     </template>
     
     <script>
@@ -19,7 +19,7 @@
         },
         
         async mounted(){
-        let currentuser = 9;
+        let currentuser = 1;
         let userData = await axios.get(`http://127.0.0.1:5000/calorie_api/get_calorie_intake/${currentuser}`).catch(function(error){
             console.log(error);
         });

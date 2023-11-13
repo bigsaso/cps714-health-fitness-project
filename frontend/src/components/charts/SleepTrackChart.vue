@@ -1,5 +1,6 @@
 <template>
     <div class="SleepChart">
+      
       <h1>{{ msg }}</h1>
       <canvas id="myChart" width = "400" height = "400"></canvas>
   

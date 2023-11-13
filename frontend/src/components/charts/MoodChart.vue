@@ -1,6 +1,6 @@
 <template>
     <header>
-        <h2>Your mood over the past week</h2>
+        <h6>Your mood over the past week</h6>
         <canvas id="moodChart"></canvas>
     </header>
 </template>
@@ -11,14 +11,15 @@
     import moodChartData from '../../scripts/charts/MoodChartData';
 
     export default {
-        name: 'CalorieIntakeChart',
+        name: 'moodChart',
         data() {
             return {
                 moodChartData: moodChartData
             }
         },
         async mounted() {
-            let userData = await axios.get("http://localhost:5000/mood_api/get_user_mood/5").catch(function(error) {
+            let currentuser = 1;
+            let userData = await axios.get(`http://localhost:5000/mood_api/get_user_mood/${currentuser}`).catch(function(error) {
                 console.log(error);
             });
             if (userData != undefined) {
