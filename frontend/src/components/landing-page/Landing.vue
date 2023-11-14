@@ -128,6 +128,11 @@
 
       </div>
 
+    <div class = "row">
+                <div class =chart-wrapper>
+                  <SleepTrackChart/>
+                </div>
+            </div>
       
 
     </div>
@@ -148,7 +153,7 @@
 <script>
 import axios from 'axios';
 import DailyStepsChart from '../charts/DailyStepsChart.vue';
-//import SleepChart from '../charts/SleepTrackChart.vue';
+import SleepTrackChart from '../charts/SleepTrackChart.vue';
 import CalorieIntakeChart from '../charts/CalorieIntakeChart.vue';
 import todayMacros from './TodayMacros.vue';
 import todayStep from './TodaySteps.vue';
@@ -161,7 +166,8 @@ export default{
       DailyStepsChart,
       todayStep,
       CalorieIntakeChart,
-      todayMacros
+      todayMacros,
+      SleepTrackChart
     },
 
     
@@ -169,7 +175,8 @@ export default{
       return{
         steps : [],
         workoutlist : [],
-     
+           averageSleep: 0, // Add this property to store the average sleep data
+
       };
     },
     async mounted(){
@@ -196,10 +203,13 @@ export default{
       
 
     },
+    
+
 
     create(){
       this.mounted();
-    }
+    },
+    
 } 
 
 </script> 

@@ -1,60 +1,101 @@
 <template>
-    <div class="SleepChart">
-      <h1>{{ msg }}</h1>
-      <canvas id="myChart" width = "400" height = "400"></canvas>
-  
-    </div>
-  </template>
-  
-  <script>
-  import Chart from 'chart.js/auto';
-  
-  export default {
-    name: 'SleepChart',
-    props: {
-      msg: String
-    },
-    mounted(){
-      console.log('Component mounted.')
-  
-    const ctx = document.getElementById('myChart');
-  
-    const myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-          labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-          datasets: [{
-              label: 'Sleep Hours',
-              data: [12, 8, 3, 5, 2, 3],
-              backgroundColor: [
-                  'rgba(71, 183,132,.5)',
-    
-              ],
-              borderColor: [
-                  '#47b784',
-              ],
-              borderWidth: 3
-          }]
-      },
-  
-  
-      options: {
-        responsive: true,
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero: true
-                  }
-              }]
-          }
-      }
-  });
-  
-  myChart;
-  
+    <header>
+        <canvas id="sleepChart"></canvas>
+    </header>
+</template>
+
+
+<script>
+    import Chart from 'chart.js/auto';
+    import axios from 'axios';
+    import sleepData from '../../scripts/charts/SleepData';
+
+    export default {
+        name: 'SleepTrackChart',
+        data() {
+            return {
+                sleepData: sleepData,
+                avgSleep : 0,
+                sum:0
+            }
+        },
+        async mounted() {
+            let userData = await axios.get("http://localhost:5000/sleep_data_api/get_sleep_data/4").catch(function(error) {
+                console.log(error);
+            });
+
+            
+            if (userData != undefined) {
+                let dataList = userData.data; //list of data for user n
+                let datasets = sleepData.data.datasets;
+                datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
+         
+
+                Date.prototype.subtractDays = function(days) {
+                    var date = new Date(this.valueOf());
+                    date.setDate(date.getDate() - days);
+                    return date;
+                }
+
+                var today = new Date();
+                let listOfDates = [];
+                let dateLabels = [];
+           
+                for (let i = 0; i < 7; i++) {
+                    let dayToUse = today.subtractDays(i);
+                    listOfDates[7 - 1 - i] = dayToUse.toLocaleDateString();
+                    dateLabels[7 - 1 - i] = dayToUse.toLocaleString('default', { month: 'long', day: 'numeric' })
+                }
+
+
+
+                for (let i in dataList) {
+                    let packet = dataList[i];
+                    let dataSendDate = new Date(packet[4]);
+
+console.log("datasenddate: " + dataSendDate);
+
+                    if (dataSendDate == null) {
+                        continue;
+                    }
+
+
+
+      
+
+
+                    let formattedDataSendDate =  dataSendDate.getUTCFullYear() + "-" + (dataSendDate.getUTCMonth() + 1) + "-" +  ("0" + dataSendDate.getUTCDate()).slice(-2);
+
+
+
+console.log("listofdates: " + listOfDates);
+
+console.log("formatteddata: " + formattedDataSendDate);
+
+                    let index = listOfDates.indexOf(formattedDataSendDate);
+
+
+       console.log("index: " + index);
+
+
+                    if (index != -1) {
+                        datasets[0].data[index] += packet[1]; //sleep
+                       this.sum += parseFloat(packet[1]);
+                       this.avgSleep = this.sum / (index+1);
+                                       this.$emit('avgSleep', this.avgSleep);
+
+                    }
+                }
+
+                dateLabels[5] = "Yesterday (" + dateLabels[5] + ")";
+                dateLabels[6] = "Today (" + dateLabels[6] + ")";
+                sleepData.data.labels = dateLabels;
+            }
+            const ctx = document.getElementById('sleepChart');
+            new Chart(ctx, this.sleepData);
+        }
     }
-  }
-  </script>
+</script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
 
