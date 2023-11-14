@@ -1,6 +1,6 @@
 <template>
 <h4> Today's steps </h4>
-<p>{{finalsteps}} steps</p>
+<p>Steps: {{finalsteps}}</p>
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default{
     },
     
     async mounted(){
-    let currentuser = 9;
+    let currentuser = 1;
     let userData = await axios.get(`http://127.0.0.1:5000/steptracker_api/get_num_steps/${currentuser}`).catch(function(error){
         console.log(error);
     });

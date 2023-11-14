@@ -31,7 +31,7 @@
         methods: {
             async onSubmit(inputData) {
                 var result;
-                let currentUser = 9;
+                let currentUser = 1;
                 switch (inputData.inputId) {
                     case 0: //steps
                         result = await axios.post("http://localhost:5000/steptracker_api/add_num_steps", {
