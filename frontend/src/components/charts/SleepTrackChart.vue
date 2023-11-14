@@ -16,12 +16,23 @@
             return {
                 sleepData: sleepData,
                 avgSleep : 0,
-                sum:0
+                sum:0,
+                userId: null
             }
         },
         async mounted() {
-            let userData = await axios.get("http://localhost:5000/sleep_data_api/get_sleep_data/4").catch(function(error) {
+
+   this.userId = localStorage.getItem('userId');
+
+                 console.log("userId: " + this.userId);
+
+
+            let userData = await axios.get(`http://localhost:5000/sleep_data_api/get_sleep_data/${this.userId}`).catch(function(error) {
                 console.log(error);
+
+
+
+
             });
 
             
@@ -82,14 +93,13 @@ console.log("formatteddata: " + formattedDataSendDate);
                         datasets[0].data[index] += packet[1]; //sleep
                        this.sum += parseFloat(packet[1]);
                        this.avgSleep = this.sum / (index+1);
-                                       this.$emit('avgSleep', this.avgSleep);
-
                     }
                 }
 
                 dateLabels[5] = "Yesterday (" + dateLabels[5] + ")";
                 dateLabels[6] = "Today (" + dateLabels[6] + ")";
                 sleepData.data.labels = dateLabels;
+                this.$emit('avgSleep', this.avgSleep);
             }
             const ctx = document.getElementById('sleepChart');
             new Chart(ctx, this.sleepData);

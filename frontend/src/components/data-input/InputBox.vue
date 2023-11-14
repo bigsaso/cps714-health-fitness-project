@@ -25,13 +25,15 @@
         },
         data() {
             return {
-                inputData: Object
+                inputData: Object,
+                userId: null
             }
         },
         methods: {
             async onSubmit(inputData) {
                 var result;
                 let currentUser = 9;
+                   this.userId = localStorage.getItem('userId');
                 switch (inputData.inputId) {
                     case 0: //steps
                         result = await axios.post("http://localhost:5000/steptracker_api/add_num_steps", {
@@ -52,7 +54,7 @@
                         break;
                     case 2: //sleep
                         result = await axios.post("http://localhost:5000/sleep_data_api/add_sleep_data", {
-                            userId: currentUser,
+                            userId: this.userId,
                             hoursSlept: inputData.values.hoursOfSleep,
                             numDaysTracked: 1,
                             date: inputData.date

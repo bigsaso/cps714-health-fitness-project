@@ -26,7 +26,7 @@ def login():
             return jsonify({'error': 'Email is required'}), 400
         
         db, cursor = mysql_connect()
-        query = "SELECT Email, Password, Salt FROM User WHERE email = %s"
+        query = "SELECT Email, Password, Salt,UserID FROM User WHERE email = %s"
         cursor.execute(query, (email,))
 
         user_data = cursor.fetchone()
@@ -35,9 +35,10 @@ def login():
         if user_data:
             password = user_data[1]
             salt = user_data[2]
+            UserID = user_data[3]
             return jsonify({
                 "message": "User details successfully retrieved.",'email': email, 
-                'password': password, 'salt':salt}), 200
+                'password': password, 'salt':salt, 'UserID':UserID}), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
