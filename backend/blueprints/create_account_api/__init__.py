@@ -24,11 +24,10 @@ def create_account():
     if existing_user:
         return jsonify({'error': 'Email already in use'}), 400
 
-   cursor.execute("INSERT INTO User (FirstName, LastName, Email, Password, Salt) VALUES (%s, %s, %s, %s, %s)",
+    cursor.execute("INSERT INTO User (FirstName, LastName, Email, Password, Salt) VALUES (%s, %s, %s, %s, %s)",
                    (firstName, lastName, email, password, salt))
 
     cursor.close()
     connection.commit()
 
     return jsonify({'message': 'Account created successfully'}), 201
-
