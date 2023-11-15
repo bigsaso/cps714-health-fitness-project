@@ -108,5 +108,3 @@ console.log("formatteddata: " + formattedDataSendDate);
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->
-
-  

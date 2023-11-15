@@ -21,12 +21,12 @@ db_config = {
 def login():
     try:
         email = request.get_json().get('email')
-
+        
         if not email:
             return jsonify({'error': 'Email is required'}), 400
         
         db, cursor = mysql_connect()
-        query = "SELECT Email, Password, Salt,UserID FROM User WHERE email = %s"
+        query = "SELECT Email, Password, Salt, UserID, FirstName, LastName FROM User WHERE email = %s"
         cursor.execute(query, (email,))
 
         user_data = cursor.fetchone()
@@ -35,14 +35,22 @@ def login():
         if user_data:
             password = user_data[1]
             salt = user_data[2]
-            UserID = user_data[3]
+            userId = user_data[3]
+            firstName = user_data[4]
+            lastName = user_data[5]
             return jsonify({
-                "message": "User details successfully retrieved.",'email': email, 
-                'password': password, 'salt':salt, 'UserID':UserID}), 200
+                "message": "Login successful.",
+                'email': email, 
+                'password': password, 
+                'salt':salt, 
+                'userId':userId,
+                'firstName':firstName,
+                'lastName':lastName
+                }), 200
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
-    
+       
 @blueprint.route('/populate_database', methods=['GET'])
 def populate_database():
     try:

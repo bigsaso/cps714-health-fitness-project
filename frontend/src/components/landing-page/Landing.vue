@@ -118,12 +118,21 @@
                 </div>
               </div>
             <!-- Need to fix sleep chart formatting -->
-            <div class = "row">
+            <div class = "col ">
                 <div class = top-buffer></div>
                 <div class =chart-wrapper>
                   <CalorieIntakeChart/>
                 </div>
+
+                <div class = top-buffer></div>
+                <div class =chart-wrapper>
+                  <moodChart />
+                </div>
             </div>
+
+
+
+            
 
 
       </div>
@@ -155,6 +164,7 @@ import axios from 'axios';
 import DailyStepsChart from '../charts/DailyStepsChart.vue';
 import SleepTrackChart from '../charts/SleepTrackChart.vue';
 import CalorieIntakeChart from '../charts/CalorieIntakeChart.vue';
+import moodChart from '../charts/MoodChart.vue';
 import todayMacros from './TodayMacros.vue';
 import todayStep from './TodaySteps.vue';
 
@@ -167,7 +177,8 @@ export default{
       todayStep,
       CalorieIntakeChart,
       todayMacros,
-      SleepTrackChart
+      SleepTrackChart,
+      moodChart
     },
 
     
@@ -189,9 +200,7 @@ export default{
       //});
 
       //Userid is hard coded for now, when testing change last digit on link with userid
-      let currentuser = 9;
-      
-      axios.get(`http://127.0.0.1:5000/steptracker_api/get_num_steps/${currentuser}`).then(response => this.steps = response.data)
+      let currentuser = 1;
 
       axios.get(`http://127.0.0.1:5000/get_exercise/${currentuser}`).then(response => this.workoutlist = response.data)
       
@@ -228,7 +237,7 @@ export default{
   width: 600px;
 }
 
-.top-buffer{margin-top:20px;}
+.top-buffer{margin-top:40px;}
 
 .tab {
         tab-size: 4;

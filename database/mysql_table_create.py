@@ -1,7 +1,8 @@
 import mysql.connector
 from mysql.connector import errorcode
+from decouple import config
 
-DB_NAME = "Fitness"
+DB_NAME = config('DB_DATABASE')
 
 def create_database(cursor):
     try:
@@ -12,9 +13,9 @@ def create_database(cursor):
         exit(1)
 
 config = {
-  'user': 'root',
-  'password': 'Cps714password',
-  'host': '127.0.0.1',
+  'user': config('DB_USER'),
+  'password': config('DB_PASSWORD'),
+  'host': config('DB_HOST')
 }
 
 try:
