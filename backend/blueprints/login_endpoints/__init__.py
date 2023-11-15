@@ -20,8 +20,7 @@ db_config = {
 @blueprint.route('/login', methods=['POST'])
 def login():
     try:
-        #email = request.get_json().get('email')
-        email = request.args.get('Email')
+        email = request.get_json().get('email')
         
         if not email:
             return jsonify({'error': 'Email is required'}), 400
