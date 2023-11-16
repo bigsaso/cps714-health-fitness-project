@@ -20,7 +20,9 @@ db_config = {
 @blueprint.route('/login', methods=['POST'])
 def login():
     try:
-        email = request.get_json().get('email')
+
+        #email = request.get_json().get('email')
+        email = request.args.get('Email')
         
         if not email:
             return jsonify({'error': 'Email is required'}), 400
@@ -46,6 +48,33 @@ def login():
                 'userId':userId,
                 'firstName':firstName,
                 'lastName':lastName
+                }), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@blueprint.route('/reset', methods=['POST'])
+def reset():
+    try:
+        email = request.get_json().get('email')
+        password = request.get_json().get('password')
+        salt = request.get_json().get('salt')
+        #below is commented out for backend testing with postman
+        #email = request.args.get('Email')
+        #password = request.args.get('Password')
+        #salt = request.args.get('Salt')
+        
+        if not email:
+            return jsonify({'error': 'Email is required'}), 400
+        
+        db, cursor = mysql_connect()
+        query = "UPDATE User SET Password=%s, Salt=%s WHERE Email= %s"
+        cursor.execute(query, (password, salt, email))
+        db.commit()
+        cursor.close()
+
+        return jsonify({
+                "message": "Reset successful.",
                 }), 200
 
     except Exception as e:
