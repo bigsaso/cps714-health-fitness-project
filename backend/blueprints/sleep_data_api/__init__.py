@@ -14,12 +14,11 @@ def add_sleep_data():
         data = request.get_json()
         userId = data['userId']
         hoursSlept = data['hoursSlept']
-        numDaysTracked = data['numDaysTracked']
         date = data['date']
 
         connection, cursor = mysql_connect()
 
-        cursor.execute("INSERT INTO SleepData (HoursSlept, NumDaysTracked, UserID, Time) VALUES (%s, %s, %s, %s)", (hoursSlept, numDaysTracked, userId, date))
+        cursor.execute("INSERT INTO SleepData (HoursSlept, UserID, Time) VALUES (%s, %s, %s)", (hoursSlept, userId, date))
         cursor.close()
         connection.commit()
 
@@ -34,6 +33,20 @@ def get_sleep_data(userId):
         connection, cursor = mysql_connect()
 
         cursor.execute("SELECT * FROM SleepData WHERE UserID = %s", (userId,))
+        data = cursor.fetchall()
+        cursor.close()
+        
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+    
+# Retrieve Sleep Hours For The Past Week
+@blueprint.route('/get_sleep_hours/<int:userId>', methods=['GET'])
+def get_sleep_hours(userId):
+    try:
+        connection, cursor = mysql_connect()
+
+        cursor.execute("SELECT HoursSlept FROM SleepData WHERE UserID = %s ORDER BY Time DESC LIMIT 7", (userId,))
         data = cursor.fetchall()
         cursor.close()
         
@@ -61,3 +74,59 @@ def update_sleep_data():
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)})
+
+# Update Sleep Data by Date
+@blueprint.route('/update_sleep_data_by_date', methods=['PUT'])
+def update_sleep_data_by_date():
+    try:
+        data = request.get_json()
+        userId = data['userId']
+        hoursSlept = data['hoursSlept']
+        numDaysTracked = data['numDaysTracked']
+        date = data['date']
+
+        connection, cursor = mysql_connect()
+
+        cursor.execute("UPDATE SleepData SET HoursSlept = %s, NumDaysTracked = %s WHERE UserID = %s AND Time = %s", (hoursSlept, numDaysTracked, userId, date))
+        result = cursor.fetchall()
+        cursor.close()
+        connection.commit()
+
+        return jsonify(data)
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+# Delete Sleep Data by ID
+@blueprint.route('/delete_sleep_data/<int:userId>', methods=['DELETE'])
+def delete_sleep_data(userId):
+    try:
+        connection, cursor = mysql_connect()
+
+        cursor.execute("DELETE FROM SleepData WHERE UserID = %s", (userId,))
+        result = cursor.fetchall()
+        cursor.close()
+        connection.commit()
+
+        return jsonify({"message": "Sleep data deleted successfully"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+# Delete Sleep Data by Date
+@blueprint.route('/delete_sleep_data_by_date', methods=['DELETE'])
+def delete_sleep_data_by_date():
+    try:
+        data = request.get_json()
+        userId = data['userId']
+        date = data['date']
+
+        connection, cursor = mysql_connect()
+
+        cursor.execute("DELETE FROM SleepData WHERE UserID = %s AND Time = %s", (userId, date))
+        result = cursor.fetchall()
+        cursor.close()
+        connection.commit()
+
+        return jsonify({"message": "Sleep data deleted successfully"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
+    
