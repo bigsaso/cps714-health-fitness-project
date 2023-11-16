@@ -1,17 +1,13 @@
 from flask import Flask, Blueprint, request, jsonify
 import mysql.connector
 from mysql.connector import errorcode
+import sys
+sys.path.append(sys.path[0][:-len('\\backend')] + '/database')
+from mysql_connection import mysql_connect
 
-blueprint=Blueprint('steptracker_api',__name__, url_prefix='/steptracker_api')
+blueprint = Blueprint('steptracker_api', __name__, url_prefix='/steptracker_api')
 
-def connect_to_database():
-    db = mysql.connector.connect(
-        user="root",
-        password="Cps714password",
-        database="Fitness",
-        host="127.0.0.1"
-    )
-    return db
+
 
 @blueprint.route('/add_num_steps', methods=['POST'])
 def add_num_steps():
@@ -19,31 +15,42 @@ def add_num_steps():
         data = request.get_json()
         userId = data['userId']
         numSteps = data['numSteps']
+        time = data['time']  
+        connection, cursor = mysql_connect()
+       
+        cursor.execute("INSERT INTO StepTracker (NumSteps, UserID, Time) VALUES (%s, %s, %s)", (numSteps, userId, time))
 
-        db = connect_to_database()
-        cursor = db.cursor()
-        cursor.execute("INSERT INTO StepTracker (NumSteps, UserID) VALUES (%s, %s)", (numSteps, userId))
-        db.commit()
         cursor.close()
-        db.close()
+        connection.commit()
 
         return jsonify({"message": "Step numbers added successfully"})
     except Exception as e:
         return jsonify({"error": str(e)})
 
-    
 @blueprint.route('/get_num_steps/<int:userId>', methods=['GET'])
 def get_num_steps(userId):
     try:
-        db = connect_to_database()
-        cursor = db.cursor()
-        cursor.execute("SELECT NumSteps FROM StepTracker WHERE UserID = %s", (userId,))
+
+        connection, cursor = mysql_connect()
+        cursor.execute("SELECT * FROM StepTracker WHERE UserID = %s", (userId,))
         data = cursor.fetchall()
         cursor.close()
-        db.close()
-
+        
         return jsonify(data)
     except Exception as e:
         return jsonify({"error": str(e)})
 
+@blueprint.route('/update_num_steps/<int:userId>/<string:date>', methods=['PUT'])
+def update_num_steps(userId, date):
+    try:
+        data = request.get_json()
+        newNumSteps = data['numSteps']
+        connection, cursor = mysql_connect()
+        cursor.execute("UPDATE StepTracker SET NumSteps = %s WHERE UserID = %s AND Time = %s", (newNumSteps, userId, date))
+       
+        cursor.close()
+        connection.commit()       
 
+        return jsonify({"message": "Step numbers have been updated successfully"})
+    except Exception as e:
+        return jsonify({"error": str(e)})
