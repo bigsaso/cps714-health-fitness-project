@@ -21,8 +21,8 @@ db_config = {
 def login():
     try:
 
-        #email = request.get_json().get('email')
-        email = request.args.get('Email')
+        email = request.get_json().get('email')
+        #email = request.args.get('Email')
         
         if not email:
             return jsonify({'error': 'Email is required'}), 400
