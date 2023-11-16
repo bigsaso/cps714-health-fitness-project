@@ -6,7 +6,20 @@
   <div class="container">
     <div class ="form-box">
         <h1 ref="title">Sign Up</h1>
-          <h2>  {{ posts.message}}       </h2>
+
+  <div v-if="fieldCheck">
+        <!-- Display the field check error message if it exists -->
+        <h2>{{ fieldCheck }}</h2>
+      </div>
+
+           <div v-else-if="posts"> <!-- Display response data if it exists -->
+        <h2>{{ posts.message }}</h2>
+      </div>
+
+      <div v-else-if="errorData"> <!-- Display error response code if it exists -->
+        <h2>{{ errorData.error }}</h2>
+      </div>
+        
  
         <form @submit.prevent="handleSubmit" > 
        
@@ -77,7 +90,10 @@ last_name : '',
 email: '',
 password: '',
 salt: '',
- posts: []
+posts: null,
+errorData: null,
+fieldCheck : null
+
 
 
  
@@ -95,6 +111,18 @@ methods:{
 
 let salt = generateSalt();
 
+ if (!this.first_name || !this.last_name || !this.email || !this.password) {
+      // Display an error message or handle the empty fields as needed
+      this.fieldCheck = "All fields must be filled.";
+      return;
+    }
+
+     if (this.password.length < 8) {
+      this.fieldCheck = "Password must be at least 8 characters long.";
+      return;
+    }
+
+
 const data = {
 first_name: this.first_name,
 last_name : this.last_name,
@@ -107,18 +135,24 @@ salt: salt
 
 
 
-axios.post('http://127.0.0.1:5000/create_account_api/create_account', data, {headers: {'Content-Type': 'application/json'}})
-     .then((response) => {
-        console.log(response);
+axios
+          .post('http://127.0.0.1:5000/create_account_api/create_account', data, {headers: {'Content-Type': 'application/json'}})
+             .then((response) => {
+              this.posts = response.data;
+          this.errorData = null
+                    this.fieldCheck = null;
+
+             })
+
 
         //link to dashboard
-        if (response.status === 201) {
-            let link = document.createElement('a');
-            link.href = "/dashboard";
-            link.click();
-        }
+        // if (response.status === 201) {
+        //     let link = document.createElement('a');
+        //     link.href = "/dashboard";
+        //     link.click();
+        // }
         //-----------------
-    })
+    
     .catch(error =>  {
   
 
@@ -127,6 +161,9 @@ axios.post('http://127.0.0.1:5000/create_account_api/create_account', data, {hea
      console.log(error.response.data);
       console.log(error.response.status);
       console.log(error.response.headers);
+     this.posts = null;
+      this.errorData = error.response.data;
+    this.fieldCheck = null;
       
     }
 

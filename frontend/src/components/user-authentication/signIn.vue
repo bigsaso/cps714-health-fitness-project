@@ -92,10 +92,11 @@ axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {header
         
         if(checkPassword(data.password, response.data.password, response.data.salt)) {
             if (response.status === 200) {
+         localStorage.setItem('userId', response.data.userId); 
                 let link = document.createElement('a');
                 link.href = "/dashboard";
                 link.click();
-            }
+             }
         } else {
             console.log("Password was not valid")
         }
