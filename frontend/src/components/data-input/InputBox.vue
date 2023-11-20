@@ -32,21 +32,19 @@
         methods: {
             async onSubmit(inputData) {
                 var result;
-                let currentUser = 1;
                 this.userId = localStorage.getItem('userId');
-
 
                 switch (inputData.inputId) {
                     case 0: //steps
                         result = await axios.post("http://localhost:5000/steptracker_api/add_num_steps", {
-                            userId: currentUser,
+                            userId: this.userId,
                             numSteps: inputData.values.steps,
                             time: inputData.date
                         });
                         break;
                     case 1: //calorie intake
                         result = await axios.post("http://localhost:5000/calorie_api/add_calorie_intake", {
-                            userId: currentUser,
+                            userId: this.userId,
                             calorie_amount: inputData.values.calories,
                             carbohydrate: inputData.values.carbs,
                             fat: inputData.values.fat,
@@ -64,7 +62,7 @@
                         break;
                     case 3: //exercise
                         result = await axios.post("http://localhost:5000/add_exercise", {
-                            inputId: currentUser,
+                            inputId: this.userId,
                             reps: inputData.values.reps,
                             sets: inputData.values.sets,
                             name: inputData.values.name,
@@ -73,7 +71,7 @@
                         break;
                     case 4: //mood
                         result = await axios.post("http://localhost:5000/mood_api/add_user_mood", {
-                            user_id: currentUser,
+                            user_id: this.userId,
                             user_happiness: inputData.values.happiness,
                             user_motivation: inputData.values.motivation,
                             date: inputData.date
@@ -81,7 +79,7 @@
                         break;
                     case 5: //goals
                         result = await axios.post("http://localhost:5000/goals_api/add_user_goals", {
-                            user_id: currentUser,
+                            user_id: this.userId,
                             weight_goal: inputData.values.weightGoal,
                             daily_calorie_burn: inputData.values.calorieGoal,
                             date: inputData.date
