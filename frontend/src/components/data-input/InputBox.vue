@@ -33,7 +33,7 @@
             async onSubmit(inputData) {
                 var result;
                 let currentUser = 1;
-                   this.userId = localStorage.getItem('userId');
+                this.userId = localStorage.getItem('userId');
 
 
                 switch (inputData.inputId) {
@@ -76,6 +76,14 @@
                             user_id: currentUser,
                             user_happiness: inputData.values.happiness,
                             user_motivation: inputData.values.motivation,
+                            date: inputData.date
+                        });
+                        break;
+                    case 5: //goals
+                        result = await axios.post("http://localhost:5000/goals_api/add_user_goals", {
+                            user_id: currentUser,
+                            weight_goal: inputData.values.weightGoal,
+                            daily_calorie_burn: inputData.values.calorieGoal,
                             date: inputData.date
                         });
                         break;

@@ -6,8 +6,8 @@
             "type": "SimpleInputFormat",
             "questions": [
                 {
-                    "unit": "steps",
                     "prompt": "How many steps have you taken?",
+                    "unit": "steps",
                     "name": "steps",
                     "inputType": "number"
                 }
@@ -25,26 +25,26 @@
             "type": "SimpleInputFormat",
             "questions": [
                 {
-                    "unit": "calories",
                     "prompt": "How many calories have you consumed?",
+                    "unit": "calories",
                     "name": "calories",
                     "inputType": "number"
                 },
                 {
-                    "unit": "grams",
                     "prompt": "How much fat have you consumed?",
+                    "unit": "grams",
                     "name": "fat",
                     "inputType": "number"
                 },
                 {
-                    "unit": "grams",
                     "prompt": "How many carbohydrates have you consumed?",
+                    "unit": "grams",
                     "name": "carbs",
                     "inputType": "number"
                 },
                 {
-                    "unit": "grams",
                     "prompt": "How much protein have you consumed?",
+                    "unit": "grams",
                     "name": "protein",
                     "inputType": "number"
                 }
@@ -62,8 +62,8 @@
             "type": "SimpleInputFormat",
             "questions": [
                 {
-                    "unit": "hours",
                     "prompt": "How many hours did you sleep?",
+                    "unit": "hours",
                     "name": "hoursOfSleep",
                     "inputType": "number"
                 }
@@ -81,20 +81,20 @@
             "type": "SimpleInputFormat",
             "questions": [
                 {
-                    "unit": "",
                     "prompt": "Exercise Name:",
+                    "unit": "",
                     "name": "name",
                     "inputType": "text"
                 },
                 {
-                    "unit": "reps",
                     "prompt": "Number of repetitions:",
+                    "unit": "reps",
                     "name": "reps",
                     "inputType": "number"
                 },
                 {
-                    "unit": "sets",
                     "prompt": "Number of sets done:",
+                    "unit": "sets",
                     "name": "sets",
                     "inputType": "number"
                 }
@@ -124,6 +124,31 @@
                     "highLabel": "Very Motivated",
                     "name": "motivation",
                     "inputType": "range"
+                }
+            ],
+            "labels": {
+                "date": "Date:",
+                "add": "Submit Data"
+            }
+        }
+    },
+    {
+        "id": 5,
+        "type": "Goals",
+        "format": {
+            "type": "SimpleInputFormat",
+            "questions": [
+                {
+                    "prompt": "What is your weight goal?",
+                    "unit": "pounds",
+                    "name": "weightGoal",
+                    "inputType": "number"
+                },
+                {
+                    "prompt": "What is your calorie burn goal?",
+                    "unit": "calories",
+                    "name": "calorieGoal",
+                    "inputType": "number"
                 }
             ],
             "labels": {
