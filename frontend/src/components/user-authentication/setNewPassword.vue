@@ -1,20 +1,20 @@
 <template>
     <div class="container">
         <div class="form-box">
-            <h1 ref="title">Sign In</h1>
-            <form @submit.prevent="">
+            <h1 ref="title">Set New Password</h1>
+            <h2> {{ posts.message }} </h2>
+            <form @submit.prevent="handleSubmit">
                 <div class="input-group">
                     <div class="input-field">
                         <input type="email" v-model="email" placeholder="Email">
                     </div>
                     <div class="input-field">
-                        <input type="password" v-model="password" placeholder="Password">
+                        <input type="password" v-model="password" placeholder="New Password">
                     </div>
                 </div>
                 <div class="btn-field">
-                    <component v-bind:is="component"></component>
-                    <button class="invert" id="signupBtn" @click="handleSubmit('signUp')">Sign In</button>
-                    <button class="invert" id="resetPasswordBtn" @click="handleSubmit('resetPassword')">Reset Password</button>
+                    <button class="invert" id="submitBtn" @click="handleSubmit('resetPassword')">Submit New Password</button>
+                    <button class="invert" id="signupBtn" @click="handleSubmit('signUp')">Logout</button>
                 </div>
             </form>
         </div>
@@ -23,69 +23,58 @@
 
 <script>
 import axios from 'axios'
-import { checkPassword } from './hash';
-// import { routerKey } from 'vue-router';
+import { generateSalt, getHashedPassword } from './hash';
 
 export default {
-    name: 'signIn',
+    name: 'setNewPassword',
+
     data() {
-
-        return {
-
+        return {        
             email: '',
-            password: ''
+            password: '',
+            salt: '',
+            posts: []
         }
     },
 
-
     methods: {
         async handleSubmit(action) {
-            if(action === "resetPassword") {
-                alert(`Please set a new password`);
-                this.$router.push('/password-reset');
+            if(action === "signUp") {
+                this.$router.push('/');
             } else {
+            let salt = generateSalt();
+
             const data = {
                 email: this.email,
-                password: this.password
+                password: getHashedPassword(this.password, salt),
+                salt: salt
             };
 
-
-
-            // try {
-            //     const res = await axios.post(
-            //         'http://127.0.0.1:5000/login_api/login?Email=zachf@testing.com&Password=Password1', {
-            //          data
-
-            //         });
-            // }
-            // catch (error){
-            //     console.log(error.response.data);
-            // }
-
-            axios.post('http://127.0.0.1:5000/login_api/login', { email: data.email }, { headers: { 'Content-Type': 'application/json' } })
+            // change this based on the new api name
+            axios.post('http://127.0.0.1:5000/login_api/reset', data, { headers: { 'Content-Type': 'application/json' } })
                 .then((response) => {
                     console.log(response);
 
                     //link to dashboard
-
-                    if (checkPassword(data.password, response.data.password, response.data.salt)) {
-                        if (response.status === 200) {
-                            this.$router.push('/dashboard');
-                        }
-                    } else {
-                        console.log("Password was not valid")
+                    if (response.status === 201) {
+                        alert(`New password has been set for ${data.email}`);
+                        this.$router.push('/dashboard');
                     }
                     //-----------------
+                })
+                .catch(error => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    }
                 });
-
-            console.log(data.email);
             }
         }
     }
 
 }
 </script>
-
 
 <style scoped>
 .container {
@@ -98,7 +87,6 @@ export default {
     background-size: cover;
     background-position: center;
 }
-
 
 .form-box {
     width: 90%;
@@ -125,7 +113,6 @@ export default {
     /*spaces it out from the fields*/
     color: #2da000;
     position: relative;
-
 }
 
 .form-box h1::after {
@@ -139,7 +126,6 @@ export default {
     bottom: -12px;
     left: 50%;
     transform: translateX(-50%);
-
 }
 
 .input-field {
@@ -152,14 +138,11 @@ export default {
     /*use flexbox for all items */
     align-items: center;
     /*center all items in the flexbox*/
-
     max-height: 65px;
     transition: max-height 0.5s;
     /* provides transition */
     overflow: hidden;
-
 }
-
 
 input {
     width: 100%;
@@ -170,19 +153,15 @@ input {
     /*make padding of input boxes wider*/
 }
 
-
-
 form p {
     text-align: left;
     font-size: 13px;
 }
 
-
 form p a {
     text-decoration: none;
     color: #3c00a0;
 }
-
 
 .btn-field {
     /* add spaces between flex box buttons */
@@ -196,7 +175,7 @@ form p a {
     flex-basis: 48%;
     background: #3c00a0;
     color: #ffff;
-    height: 40px;
+    height: 50px;
     /*increase height of button*/
     border-radius: 20px;
     /*makes border go in more rounder shape*/
@@ -209,7 +188,6 @@ form p a {
 
 .input-group {
     /*add space between input field and button*/
-
     height: 280px;
 }
 

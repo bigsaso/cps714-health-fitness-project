@@ -6,13 +6,15 @@ import App from './App.vue'
 import MyLanding from './components/landing-page/Landing.vue';
 import DataInputPage from './components/data-input/DataInputPage.vue';
 import UserAuthentication from './components/user-authentication/UserAuthentication.vue';
+import PasswordReset from './components/user-authentication/setNewPassword.vue';
 
 const router = createRouter({
     history: createWebHistory(),
     routes: [
         { path: '/dashboard', component: MyLanding },
         { path: '/update-progress', component: DataInputPage },
-        { path: '/', component: UserAuthentication }
+        { path: '/', component: UserAuthentication },
+        { path: '/password-reset', component: PasswordReset }
     ]
 });
 

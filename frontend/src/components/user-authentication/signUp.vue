@@ -110,12 +110,9 @@ salt: salt
 axios.post('http://127.0.0.1:5000/create_account_api/create_account', data, {headers: {'Content-Type': 'application/json'}})
      .then((response) => {
         console.log(response);
-
         //link to dashboard
         if (response.status === 201) {
-            let link = document.createElement('a');
-            link.href = "/dashboard";
-            link.click();
+            this.$router.push('/dashboard');
         }
         //-----------------
     })
