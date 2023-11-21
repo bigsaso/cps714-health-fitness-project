@@ -40,9 +40,12 @@
     <div class="col-sm-9">
       <div class="well">
         <h4>Dashboard</h4>
-        <p>Welcome back user!</p>
+        
+
+        <h2>Welcome back {{currentName}}</h2>
       </div>
     <div>
+      <div class = "top-buffer"></div>
       <h3> 
         Weight progress
       </h3>
@@ -56,6 +59,7 @@
           160lb / 180 lb goal
         </div>
       </div>
+      <div class = "top-buffer"></div>
     
   
 
@@ -70,8 +74,8 @@
 
               <!-- Current calorie data -->
               <div class = "col border">
-                <h4>Today's calorie goal</h4>
-                <p>2500 cal</p> 
+                
+                <todayCalBurned />
               </div>
 
               <!-- Sleep average data -->
@@ -167,6 +171,7 @@ import CalorieIntakeChart from '../charts/CalorieIntakeChart.vue';
 import moodChart from '../charts/MoodChart.vue';
 import todayMacros from './TodayMacros.vue';
 import todayStep from './TodaySteps.vue';
+import todayCalBurned from './TodaysCalorieBurn.vue';
 
 export default{
 
@@ -177,6 +182,7 @@ export default{
       todayStep,
       CalorieIntakeChart,
       todayMacros,
+      todayCalBurned,
       SleepTrackChart,
       moodChart
     },
@@ -186,7 +192,8 @@ export default{
       return{
         steps : [],
         workoutlist : [],
-           averageSleep: 0, // Add this property to store the average sleep data
+        averageSleep: 0, // Add this property to store the average sleep data
+        currentName : '',
 
       };
     },
@@ -199,17 +206,15 @@ export default{
       //  console.log(error);
       //});
 
-      //Userid is hard coded for now, when testing change last digit on link with userid
-      let currentuser = 1;
+      
+
+      let currentuser = localStorage.getItem('userId');
+      this.currentName = localStorage.getItem('firstName');
 
       axios.get(`http://127.0.0.1:5000/get_exercise/${currentuser}`).then(response => this.workoutlist = response.data)
       
       
-       var today = new Date();
-       console.log(today);
-
-
-      
+     
 
     },
     
