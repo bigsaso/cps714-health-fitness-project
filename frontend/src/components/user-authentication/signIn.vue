@@ -2,18 +2,7 @@
     <div class="container">
         <div class="form-box">
             <h1 ref="title">Sign In</h1>
-            <form @submit.prevent="">
-                <div class="input-group">
-                    <div class="input-field">
-                        <input type="email" v-model="email" placeholder="Email">
-                    </div>
-                    <div class="input-field">
-                        <input type="password" v-model="password" placeholder="Password">
-                    </div>
-    <div class="container">
-        <div class="form-box">
-            <h1 ref="title">Sign In</h1>
-            <form @submit.prevent="">
+            <form @submit.prevent="handleSubmit">
                 <div class="input-group">
                     <div class="input-field">
                         <input type="email" v-model="email" placeholder="Email">
@@ -26,38 +15,23 @@
                     <component v-bind:is="component"></component>
                     <button class="invert" id="signupBtn" @click="handleSubmit('signUp')">Sign In</button>
                     <button class="invert" id="resetPasswordBtn" @click="handleSubmit('resetPassword')">Reset Password</button>
-                <div class="btn-field">
-                    <component v-bind:is="component"></component>
-                    <button class="invert" id="signupBtn" @click="handleSubmit('signUp')">Sign In</button>
-                    <button class="invert" id="resetPasswordBtn" @click="handleSubmit('resetPassword')">Reset Password</button>
                 </div>
             </form>
         </div>
-            </form>
         </div>
-    </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { checkPassword } from './hash';
 // import { routerKey } from 'vue-router';
-// import { routerKey } from 'vue-router';
 
-export default {
-    name: 'signIn',
-    data() {
 export default {
     name: 'signIn',
     data() {
 
         return {
-        return {
 
-            email: '',
-            password: ''
-        }
-    },
             email: '',
             password: ''
         }
@@ -75,23 +49,9 @@ export default {
                 password: this.password
             };
 
-    methods: {
-        async handleSubmit(action) {
-            if(action === "resetPassword") {
-                alert(`Please set a new password`);
-                this.$router.push('/password-reset');
-            } else {
-            const data = {
-                email: this.email,
-                password: this.password
-            };
 
 
 
-            // try {
-            //     const res = await axios.post(
-            //         'http://127.0.0.1:5000/login_api/login?Email=zachf@testing.com&Password=Password1', {
-            //          data
             // try {
             //     const res = await axios.post(
             //         'http://127.0.0.1:5000/login_api/login?Email=zachf@testing.com&Password=Password1', {
@@ -126,12 +86,6 @@ axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {header
             }
         }
     }
-            console.log(data.email);
-            }
-        }
-    }
-
-}
 }
 </script>
 
@@ -144,19 +98,11 @@ axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {header
     background-color: lightblue;
     /* can be image too*/
     position: relative;
-.container {
-    width: 100%;
-    height: 100vh;
-    /*vh stands for viewable height */
-    background-color: lightblue;
-    /* can be image too*/
-    position: relative;
     background-size: cover;
     background-position: center;
 }
 
 
-.form-box {
 .form-box {
     width: 90%;
     max-width: 450px;
@@ -190,7 +136,6 @@ axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {header
 }
 
 .form-box h1 {
-.form-box h1 {
     font-size: 30px;
     margin-bottom: 60px;
     /*spaces it out from the fields*/
@@ -201,8 +146,6 @@ axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {header
 
 }
 
-.form-box h1::after {
-    /*  */
 .form-box h1::after {
     /*  */
     content: '';
@@ -228,16 +171,6 @@ axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {header
     /*use flexbox for all items */
     align-items: center;
     /*center all items in the flexbox*/
-.input-field {
-    background: #eaeaea;
-    margin: 15px 0;
-    /* create space around text between textboxes */
-    border-radius: 3px;
-    /*closes in margin border*/
-    display: flex;
-    /*use flexbox for all items */
-    align-items: center;
-    /*center all items in the flexbox*/
 
     max-height: 65px;
     transition: max-height 0.5s;
@@ -258,18 +191,10 @@ input {
     outline: 0;
     padding: 18px 15px;
     /*make padding of input boxes wider*/
-input {
-    width: 100%;
-    background: transparent;
-    border: 0;
-    outline: 0;
-    padding: 18px 15px;
-    /*make padding of input boxes wider*/
 }
 
 
 
-form p {
 form p {
     text-align: left;
     font-size: 13px;
@@ -285,16 +210,10 @@ form p a {
 .btn-field {
     /* add spaces between flex box buttons */
     width: 100%;
-.btn-field {
-    /* add spaces between flex box buttons */
-    width: 100%;
     display: flex;
     justify-content: space-between;
 }
 
-.btn-field button {
-    /*provides length for flex button*/
-    flex-basis: 48%;
 .btn-field button {
     /*provides length for flex button*/
     flex-basis: 48%;
@@ -318,8 +237,6 @@ form p a {
     transition: background 1s;
 }
 
-.input-group {
-    /*add space between input field and button*/
 
 .input-group {
     /*add space between input field and button*/
@@ -328,8 +245,6 @@ form p a {
 }
 
 .invert {
-.invert {
     background: #eaeaea;
     color: rgb(85, 85, 85);
-}</style>
 }</style>

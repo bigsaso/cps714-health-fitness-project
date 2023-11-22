@@ -23,7 +23,7 @@
 
 <script>
 import axios from 'axios'
-import { generateSalt, getHashedPassword } from './hash';
+import { generateSalt, getHashedPassword, checkPassword } from './hash';
 
 export default {
     name: 'setNewPassword',
@@ -56,9 +56,25 @@ export default {
                     console.log(response);
 
                     //link to dashboard
-                    if (response.status === 201) {
-                        alert(`New password has been set for ${data.email}`);
-                        this.$router.push('/dashboard');
+                    if (response.status === 200) {
+                        axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {headers: {'Content-Type': 'application/json'}})
+     .then((response) => {
+        console.log(response);
+        
+        //link to dashboard
+        
+        if(checkPassword(this.password, response.data.password, response.data.salt)) {
+            if (response.status === 200) {
+         localStorage.setItem('userId', response.data.userId); 
+                let link = document.createElement('a');
+                link.href = "/dashboard";
+                link.click();
+             }
+        } else {
+            console.log("Password was not valid")
+        }
+        //-----------------
+    });
                     }
                     //-----------------
                 })
