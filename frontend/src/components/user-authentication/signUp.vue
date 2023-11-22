@@ -146,11 +146,9 @@ axios
 
 
         //link to dashboard
-        // if (response.status === 201) {
-        //     let link = document.createElement('a');
-        //     link.href = "/dashboard";
-        //     link.click();
-        // }
+        if (response.status === 201) {
+            this.$router.push('/dashboard');
+        }
         //-----------------
     
     .catch(error =>  {

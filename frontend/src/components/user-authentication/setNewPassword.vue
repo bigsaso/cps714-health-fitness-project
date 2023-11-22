@@ -6,31 +6,15 @@
             <form @submit.prevent="handleSubmit">
                 <div class="input-group">
                     <div class="input-field">
-                        <input
-                            type="email"
-                            v-model="email"
-                            placeholder="Email"
-                        >
+                        <input type="email" v-model="email" placeholder="Email">
                     </div>
                     <div class="input-field">
-                        <input
-                            type="password"
-                            v-model="password"
-                            placeholder="New Password"
-                        >
+                        <input type="password" v-model="password" placeholder="New Password">
                     </div>
                 </div>
                 <div class="btn-field">
-                    <button
-                        class="invert"
-                        id="submitBtn"
-                        @click="handleSubmit('resetPassword')"
-                    >Submit New Password</button>
-                    <button
-                        class="invert"
-                        id="signupBtn"
-                        @click="handleSubmit('signUp')"
-                    >Logout</button>
+                    <button class="invert" id="submitBtn" @click="handleSubmit('resetPassword')">Submit New Password</button>
+                    <button class="invert" id="signupBtn" @click="handleSubmit('signUp')">Logout</button>
                 </div>
             </form>
         </div>
@@ -39,13 +23,13 @@
 
 <script>
 import axios from 'axios'
-import { generateSalt, getHashedPassword, checkPassword } from './hash';
+import { generateSalt, getHashedPassword } from './hash';
 
 export default {
     name: 'setNewPassword',
 
     data() {
-        return {
+        return {        
             email: '',
             password: '',
             salt: '',
@@ -55,53 +39,36 @@ export default {
 
     methods: {
         async handleSubmit(action) {
-            if (action === "signUp") {
+            if(action === "signUp") {
                 this.$router.push('/');
             } else {
-                let salt = generateSalt();
+            let salt = generateSalt();
 
-                const data = {
-                    email: this.email,
-                    password: getHashedPassword(this.password, salt),
-                    salt: salt
-                };
+            const data = {
+                email: this.email,
+                password: getHashedPassword(this.password, salt),
+                salt: salt
+            };
 
-                axios.post('http://127.0.0.1:5000/login_api/reset', data, { headers: { 'Content-Type': 'application/json' } })
-                    .then((response) => {
-                        console.log(response);
+            // change this based on the new api name
+            axios.post('http://127.0.0.1:5000/login_api/reset', data, { headers: { 'Content-Type': 'application/json' } })
+                .then((response) => {
+                    console.log(response);
 
-                        //link to dashboard
-                        if (response.status === 200) {
-                            // localStorage.setItem('userId', response.data.userId);
-                            // alert(`New password has been set for ${data.email}`);
-
-                            axios.post('http://127.0.0.1:5000/login_api/login', { email: data.email }, { headers: { 'Content-Type': 'application/json' } })
-                                .then((response) => {
-                                    console.log(response);
-
-                                    //link to dashboard
-
-                                    if (checkPassword(this.password, response.data.password, response.data.salt)) {
-                                        if (response.status === 200) {
-                                            localStorage.setItem('userId', response.data.userId);
-                                            this.$router.push('/dashboard');
-                                        }
-                                    } else {
-                                        console.log("Password was not valid")
-                                    }
-                                    //-----------------
-                                });
-                          
-                        }
-                        //-----------------
-                    })
-                    .catch(error => {
-                        if (error.response) {
-                            console.log(error.response.data);
-                            console.log(error.response.status);
-                            console.log(error.response.headers);
-                        }
-                    });
+                    //link to dashboard
+                    if (response.status === 201) {
+                        alert(`New password has been set for ${data.email}`);
+                        this.$router.push('/dashboard');
+                    }
+                    //-----------------
+                })
+                .catch(error => {
+                    if (error.response) {
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    }
+                });
             }
         }
     }
