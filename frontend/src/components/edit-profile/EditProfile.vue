@@ -9,7 +9,7 @@
                         <label>Age:&nbsp;</label>
                     </td>
                     <td>
-                        <input type="number" id="age" v-model="newData['age']" min="1" onkeydown="return event.keyCode !== 69 && event.keyCode !== 190"/>
+                        <input type="number" id="age" class="inputBox" v-model="newData['age']" min="1" onkeydown="return event.keyCode !== 69 && event.keyCode !== 190"/>
                     </td>
                 </tr>
                 <tr id="updateHeight">
@@ -17,7 +17,7 @@
                         <label>Height:&nbsp;</label>
                     </td>
                     <td>
-                        <input type="number" id="height" v-model="newData['height']" min="1" onkeydown="return event.keyCode !== 69"/>
+                        <input type="number" id="height" class="inputBox" v-model="newData['height']" min="1" max="999" step="0.01" onkeydown="return event.keyCode !== 69"/>
                     </td>
                     <td class="leftAlign">
                         <label>&nbsp;inches</label>
@@ -28,19 +28,21 @@
                         <label>Weight:&nbsp;</label>
                     </td>
                     <td>
-                        <input type="number" id="weight" v-model="newData['weight']" min="1" onkeydown="return event.keyCode !== 69"/>
+                        <input type="number" id="weight" class="inputBox" v-model="newData['weight']" min="1" max="999" step="0.01" onkeydown="return event.keyCode !== 69"/>
                     </td>
                     <td class="leftAlign">
                         <label>&nbsp;pounds</label>
                     </td>
                 </tr>
-                    </table><br>
+            </table><br>
             
             <input type="submit" value="Submit"/><br><br>
         </form>
             
         <p id="message"></p>
         <br><br>
+        <button @click="resetChanges">Reset</button>
+        &nbsp;&nbsp;
         <a href="/dashboard"><button>Back</button></a>
     </header>
 </template>
@@ -56,10 +58,7 @@
             }
         },
         async created() {
-            var oldData = (await axios.get(`http://127.0.0.1:5000/user_api/get_user_data/${localStorage.getItem('userId')}`))['data']['user_data'][0];
-            this.newData['age'] = oldData[0];
-            this.newData['height'] = oldData[1];
-            this.newData['weight'] = oldData[2];
+            this.setAllAttributesFromDB();
         },
         methods: {
             async onSubmit(e) {
@@ -85,9 +84,11 @@
                     user_height: updatedData.height,
                     user_weight: updatedData.weight
                 });
-                console.log(result);
+                
+                let newMessage = "";
                 if (updatedKeys.length == 0) {
-                    document.querySelector("#message").innerHTML = "No data was changed";
+                    newMessage = "No data was changed";
+                    this.setAllAttributes(updatedData);
                 } else if (result.status === 200) {
                     let updatedKeysString = "";
                     if (updatedKeys.length === 1) {
@@ -98,11 +99,32 @@
                         let finalKey = updatedKeys.pop();
                         updatedKeysString = updatedKeys.join(", ") + ", and " + finalKey;
                     }
-                    //for (i in updatedKeys) {}
-                    document.querySelector("#message").innerHTML = `Successfully updated your ${updatedKeysString}`;
+                    newMessage = `Successfully updated your ${updatedKeysString}`;
+                    this.setAllAttributes(updatedData);
                 } else {
-                    document.querySelector("#message").innerHTML = "Error: Couldn't update your data";
+                    newMessage = "Error: Couldn't update your data";
                 }
+                this.setStatusMessage(newMessage);
+            },
+            async resetChanges() {
+                this.setAllAttributesFromDB();
+                this.setStatusMessage("");
+            },
+            async setAllAttributes(dataObj) {
+                this.newData['age'] = dataObj['age'];
+                this.newData['height'] = parseFloat(dataObj['height']);
+                this.newData['weight'] = parseFloat(dataObj['weight']);
+            },
+            async setAllAttributesFromDB() {
+                var currentData = (await axios.get(`http://127.0.0.1:5000/user_api/get_user_data/${localStorage.getItem('userId')}`))['data']['user_data'][0];
+                this.setAllAttributes({
+                    age: currentData[0],
+                    height: currentData[1],
+                    weight: currentData[2]
+                });
+            },
+            async setStatusMessage(newMessage) {
+                document.querySelector("#message").innerHTML = newMessage;
             }
         }
     }
@@ -119,5 +141,10 @@
 
     .rightAlign {
         text-align: right;
+    }
+
+    .inputBox {
+        display: inline;
+        min-width: 200px;
     }
 </style>

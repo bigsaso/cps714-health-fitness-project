@@ -4,10 +4,10 @@
             <div :key="question.name" v-for="question in currentInputType.format.questions">
                 <label>{{question.prompt}}&nbsp;</label>
                 <div v-if="question.inputType === 'text'">
-                    <input type="text" class="textInput" v-model="amounts[question.name]" name="amount" required/>
+                    <input type="text" class="textInput inputBox" v-model="amounts[question.name]" name="amount" required/>
                 </div>
                 <div v-else>
-                    <input type="number" class="numInput" v-model="amounts[question.name]" name="amount" min="0" onkeydown="return event.keyCode !== 69" required/>
+                    <input type="number" class="numInput inputBox" v-model="amounts[question.name]" name="amount" min="0" :max="question.max" :step="question.step" onkeydown="return event.keyCode !== 69" required/>
                 </div>
                 <label>&nbsp;{{question.unit}}</label>
                 <br>
@@ -92,7 +92,8 @@
         display: inline;
     }
 
-    input {
+    .inputBox {
         display: inline;
+        min-width: 200px;
     }
 </style>
