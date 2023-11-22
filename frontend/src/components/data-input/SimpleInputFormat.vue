@@ -1,17 +1,24 @@
 <template>
     <header>
         <form @submit="onSubmit">
-            <div :key="question.name" v-for="question in currentInputType.format.questions">
-                <label>{{question.prompt}}&nbsp;</label>
-                <div v-if="question.inputType === 'text'">
-                    <input type="text" class="textInput inputBox" v-model="amounts[question.name]" name="amount" required/>
-                </div>
-                <div v-else>
-                    <input type="number" class="numInput inputBox" v-model="amounts[question.name]" name="amount" min="0" :max="question.max" :step="question.step" onkeydown="return event.keyCode !== 69" required/>
-                </div>
-                <label>&nbsp;{{question.unit}}</label>
-                <br>
-            </div>
+            <table>
+                <tr :key="question.name" v-for="question in currentInputType.format.questions">
+                    <td class="rightAlign">
+                        <label>{{question.prompt}}&nbsp;</label>
+                    </td>
+                    <td>
+                        <div v-if="question.inputType === 'text'">
+                            <input type="text" class="textInput inputBox" v-model="amounts[question.name]" name="amount" required/>
+                        </div>
+                        <div v-else>
+                            <input type="number" class="numInput inputBox" v-model="amounts[question.name]" name="amount" min="0" :max="question.max" :step="question.step" onkeydown="return event.keyCode !== 69" required/>
+                        </div>
+                    </td>
+                    <td class="leftAlign">
+                        <label>&nbsp;{{question.unit}}</label>
+                    </td>
+                </tr>
+            </table>
             <br>
 
             <div class="date">
@@ -94,6 +101,18 @@
 
     .inputBox {
         display: inline;
-        min-width: 200px;
+        min-width: 203px;
+    }
+
+    table {
+        margin: auto;
+    }
+
+    .leftAlign {
+        text-align: left;
+    }
+
+    .rightAlign {
+        text-align: right;
     }
 </style>
