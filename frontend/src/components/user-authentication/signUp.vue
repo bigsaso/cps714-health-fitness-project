@@ -142,15 +142,14 @@ axios
           this.errorData = null
                     this.fieldCheck = null;
 
+                if (response.status === 201) {
+                this.$router.push('/dashboard');
+                }  
              })
 
 
         //link to dashboard
-        // if (response.status === 201) {
-        //     let link = document.createElement('a');
-        //     link.href = "/dashboard";
-        //     link.click();
-        // }
+        
         //-----------------
     
     .catch(error =>  {

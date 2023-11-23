@@ -13,6 +13,7 @@ from blueprints.calorie_api import blueprint as calorie_api
 from blueprints.create_account_api import blueprint as create_account_api
 from blueprints.goals_api import blueprint as goals_api
 from blueprints.user_api import blueprint as user_api
+from blueprints.delete_account_api import blueprint as delete_account_api
 
 app = Flask(__name__)
 CORS(app)
@@ -27,6 +28,7 @@ app.register_blueprint(calorie_api)
 app.register_blueprint(create_account_api)
 app.register_blueprint(goals_api)
 app.register_blueprint(user_api)
+app.register_blueprint(delete_account_api)
 
 if __name__ == "__main__":
     app.run()
