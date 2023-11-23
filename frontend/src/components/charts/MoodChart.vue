@@ -18,7 +18,7 @@
             }
         },
         async mounted() {
-            let currentuser = 1;
+            let currentuser = localStorage.getItem('userId');
             let userData = await axios.get(`http://localhost:5000/mood_api/get_user_mood/${currentuser}`).catch(function(error) {
                 console.log(error);
             });

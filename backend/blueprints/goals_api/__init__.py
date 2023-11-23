@@ -17,7 +17,8 @@ def get_user_goals(user_id):
         user_goal = cursor.fetchall()
         cursor.close()
 
-        return jsonify({'user_mood': user_goal}), 200
+        
+        return jsonify({'user_goals':user_goal}),200
     except Exception as e:
         return jsonify({'error': str(e)})
 
