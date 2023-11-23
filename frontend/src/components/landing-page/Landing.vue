@@ -29,6 +29,11 @@
 
         <li class="nav-item">
           <div class = "top-buffer"></div>
+            <a class="nav-link" href="/edit-profile"><span class="mb-1 h4">Edit Profile</span></a>
+        </li>
+
+        <li class="nav-item">
+          <div class = "top-buffer"></div>
             <a class="nav-link" href="/"><span class="mb-1 h4">Logout</span></a>
         </li>
       </ul>

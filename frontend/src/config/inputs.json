@@ -65,7 +65,9 @@
                     "prompt": "How many hours did you sleep?",
                     "unit": "hours",
                     "name": "hoursOfSleep",
-                    "inputType": "number"
+                    "inputType": "number",
+                    "max": 24,
+                    "step": 0.01
                 }
             ],
             "labels": {
@@ -142,7 +144,9 @@
                     "prompt": "What is your weight goal?",
                     "unit": "pounds",
                     "name": "weightGoal",
-                    "inputType": "number"
+                    "inputType": "number",
+                    "max": 999,
+                    "step": 0.01
                 },
                 {
                     "prompt": "What is your calorie burn goal?",
