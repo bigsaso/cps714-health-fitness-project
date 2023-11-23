@@ -2,6 +2,8 @@ CREATE TABLE User (
     UserID INT AUTO_INCREMENT PRIMARY KEY,
     Password VARCHAR(255) NOT NULL,
     Salt VARCHAR(16) NOT NULL,
+    isAccountVerified BIT(1),
+    VerificationCode INT,
     FirstName VARCHAR(255) NOT NULL,
     LastName VARCHAR(255) NOT NULL,
     Email VARCHAR(255) NOT NULL,
