@@ -202,6 +202,18 @@ export default{
 
       };
     },
+
+ created() {
+    // Dynamically import Bootstrap only when this component is created
+    import('bootstrap/dist/css/bootstrap.min.css')
+      .then(() => {
+        console.log('Bootstrap has been imported for MyLanding.vue');
+      })
+      .catch((error) => {
+        console.error('Error importing Bootstrap:', error);
+      });
+  },
+
     async mounted(){
       
       //let workoutdata = await axios.get("http://127.0.0.1:5000/get_exercise/8").catch(function(error){
