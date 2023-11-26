@@ -1,114 +1,67 @@
 <template>
-
-
-
-
   <div class="container">
-    <div class ="form-box">
-        <h1 ref="title">Sign In</h1>
- 
-        <form @submit.prevent="handleSubmit" > 
-       
+    <div class="form-box">
+      <h1 ref="title">Sign In</h1>
+      <h3 v-if="errorMessage" class="error-message">{{ errorMessage }}</h3>
 
-            <div class = "input-group">
+      <form @submit.prevent="handleSubmit">
+        <div class="input-group">
+          <div class="input-field">
+            <input type="email" v-model="email" placeholder="Email" />
+          </div>
+          <div class="input-field">
+            <input type="password" v-model="password" placeholder="Password" />
+          </div>
+        </div>
+        <div class="btn-field">
+          <button class="invert" id="signupBtn">Sign In</button>
+        </div>
+      </form>
 
-
-
-                <div class="input-field">
-                    <input type = "email" v-model = "email" placeholder = "Email"> 
-               
-                </div>
-
-                <div class="input-field">
-                    <input type = "password"  v-model = "password"  placeholder = "Password"> 
-                </div>
-
-                
-            </div>
-        <div class = "btn-field">
-                <button class= "invert" id="signupBtn" @click="signUp = !signUp">Sign In</button>
-      
-             
-                </div>
-         
-
-
-
-
-
-        </form>
 
 
     </div>
-
-</div>
-
-
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import { checkPassword } from './hash';
 
-  export default {
-      name: 'signIn',
+export default {
+  name: 'signIn',
+  data() {
+    return {
+      email: '',
+      password: '',
+      errorMessage: '' 
+    };
+  },
+  methods: {
+    async handleSubmit() {
+      const data = {
+        email: this.email,
+        password: this.password
+      };
 
-data(){
+      try {
+        const response = await axios.post('http://127.0.0.1:5000/login_api/login', data);
 
-return {
-
-email: '',
-password: ''
-}
-},
-
-
-methods:{
- async handleSubmit(){
-
-const data = {
-email: this.email,
-password: this.password
-};
-    
-
-
-// try {
-//     const res = await axios.post(
-//         'http://127.0.0.1:5000/login_api/login?Email=zachf@testing.com&Password=Password1', {
-//          data
-
-//         });
-// }
-// catch (error){
-//     console.log(error.response.data);
-// }
-    
-axios.post('http://127.0.0.1:5000/login_api/login', {email: data.email}, {headers: {'Content-Type': 'application/json'}})
-     .then((response) => {
-        console.log(response);
-        
-        //link to dashboard
-        
-        if(checkPassword(data.password, response.data.password, response.data.salt)) {
-            if (response.status === 200) {
-         localStorage.setItem('userId', response.data.userId); 
-                let link = document.createElement('a');
-                link.href = "/dashboard";
-                link.click();
-             }
+        if (checkPassword(data.password, response.data.password, response.data.salt)) {
+          localStorage.setItem('userId', response.data.userId);
+          let link = document.createElement('a');
+          link.href = "/dashboard";
+          link.click();
         } else {
-            console.log("Password was not valid")
+          this.errorMessage = "Invalid email or password"; 
         }
-        //-----------------
-    });
-
-          console.log(data.email);
-
+      } catch (error) {
+        console.error("Error during sign-in:", error.response.data);
+        this.errorMessage = "Login failed. Please try again."; // Set error message for general errors
       }
+    }
   }
-
-  }
+};
 </script>
 
 
