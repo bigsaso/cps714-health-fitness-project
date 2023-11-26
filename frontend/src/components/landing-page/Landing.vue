@@ -22,10 +22,10 @@
             <a class="nav-link" href="/dashboard"><span class="mb-1 h4">See Progress</span></a>
         </li>
 
-        <li class="nav-item">
+        
           <div class = "top-buffer"></div>
-            <a class="nav-link" href="/dashboard"><span class="mb-1 h4">Share</span></a>
-        </li>
+            <shareNetworks />
+      
 
         <li class="nav-item">
           <div class = "top-buffer"></div>
@@ -46,7 +46,6 @@
       <div class="well">
         <h4>Dashboard</h4>
         
-
         <h2>Welcome back {{currentName}}</h2>
       </div>
     <div>
@@ -58,12 +57,7 @@
     </div>
   
       <!-- Weight progress bar -->
-      <div class="progress" style="height:30px">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="90"
-        aria-valuemin="0" aria-valuemax="100" style="width:88%">
-          160lb / 180 lb goal
-        </div>
-      </div>
+       <currentWeight/>
       <div class = "top-buffer"></div>
     
   
@@ -177,6 +171,9 @@ import moodChart from '../charts/MoodChart.vue';
 import todayMacros from './TodayMacros.vue';
 import todayStep from './TodaySteps.vue';
 import todayCalBurned from './TodaysCalorieBurn.vue';
+import shareNetworks from './ShareNet.vue';
+import currentWeight from './WeightGoals.vue';
+
 
 export default{
 
@@ -189,7 +186,9 @@ export default{
       todayMacros,
       todayCalBurned,
       SleepTrackChart,
-      moodChart
+      moodChart,
+      shareNetworks,
+      currentWeight
     },
 
     
