@@ -10,7 +10,7 @@ export default{
 
     data(){
         return {
-            finalsteps : null
+            finalsteps : 0
         }
     },
     

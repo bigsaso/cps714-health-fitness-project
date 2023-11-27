@@ -19,9 +19,9 @@ import axios from 'axios';
     
         data(){
             return {
-                currentWeight : null,
-                goalWeight : null,
-                weightPercentage : null
+                currentWeight : 0,
+                goalWeight : 0,
+                weightPercentage : 0
                 
                 
             }
