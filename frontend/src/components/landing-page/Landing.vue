@@ -86,7 +86,7 @@
               <!-- Sleep average data -->
               <div class = "col border">
                 <h4>Hours slept average</h4>
-                <p>7 hr</p> 
+                <p>{{this.averageSleep}} hours</p> 
               </div>
 
               <!-- Macronutrient data  -->
@@ -199,6 +199,7 @@ export default{
         workoutlist : [],
         averageSleep: 0, // Add this property to store the average sleep data
         currentName : '',
+    
 
       };
     },
@@ -227,6 +228,11 @@ export default{
 
       let currentuser = localStorage.getItem('userId');
       this.currentName = localStorage.getItem('firstName');
+
+      this.averageSleep = localStorage.getItem('sleep');
+      console.log("sleep: " + this.averageSleep);
+
+
 
       axios.get(`http://127.0.0.1:5000/get_exercise/${currentuser}`).then(response => this.workoutlist = response.data)
       
