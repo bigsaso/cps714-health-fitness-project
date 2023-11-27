@@ -1,8 +1,8 @@
 <template>
     <h4> Today's Macronutrients </h4>
-    <p>Carbs :{{finalcarbs}}g</p>
-    <p>Fat :{{finalfat}}g</p>
-    <p>Protein:{{finalprotein}}g</p>
+    <p>Carbs :{{finalcarbs}} g</p>
+    <p>Fat :{{finalfat}} g</p>
+    <p>Protein:{{finalprotein}} g</p>
     </template>
     
     <script>
@@ -12,9 +12,9 @@
     
         data(){
             return {
-                finalcarbs : null,
-                finalfat : null,
-                finalprotein : null
+                finalcarbs : 0,
+                finalfat : 0,
+                finalprotein : 0
             }
         },
         

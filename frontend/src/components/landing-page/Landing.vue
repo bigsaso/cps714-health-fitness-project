@@ -4,7 +4,6 @@
 
 </head>
 
-
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-3 sidenav hidden-xs">
@@ -24,13 +23,13 @@
 
         <li class="nav-item">
           <div class = "top-buffer"></div>
-            <a class="nav-link" href="/dashboard"><span class="mb-1 h4">Share</span></a>
-        </li>
-
-        <li class="nav-item">
-          <div class = "top-buffer"></div>
             <a class="nav-link" href="/edit-profile"><span class="mb-1 h4">Edit Profile</span></a>
         </li>
+
+        
+          <div class = "top-buffer"></div>
+            <shareNetworks />
+      
 
         <li class="nav-item">
           <div class = "top-buffer"></div>
@@ -39,14 +38,12 @@
       </ul>
     </div>
     
-  
-
     
     <div class="col-sm-9">
+      
       <div class="well">
         <h4>Dashboard</h4>
         
-
         <h2>Welcome back {{currentName}}</h2>
       </div>
     <div>
@@ -58,18 +55,15 @@
     </div>
   
       <!-- Weight progress bar -->
-      <div class="progress" style="height:30px">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="90"
-        aria-valuemin="0" aria-valuemax="100" style="width:88%">
-          160lb / 180 lb goal
-        </div>
-      </div>
+       <currentWeight/>
       <div class = "top-buffer"></div>
     
   
 
       <div class="container-fluid ">
+        <div class ="background-heading">
             <div class = "row">
+              
 
               <!-- Today's steps data -->
               <div class = "col border">
@@ -92,6 +86,7 @@
               <!-- Macronutrient data  -->
               <div class = "col border">
                 <todayMacros />
+              </div>
               </div>
               
             </div>
@@ -127,22 +122,22 @@
                 </div>
               </div>
             <!-- Need to fix sleep chart formatting -->
-            <div class = "col ">
+            <div class = "row ">
                 <div class = top-buffer></div>
-                <div class =chart-wrapper>
-                  <CalorieIntakeChart/>
+                
+                <div class =chart-wrapper pull-left >
+                  <div class = "col" >
+                    <CalorieIntakeChart/>
+                  </div>
                 </div>
 
                 <div class = top-buffer></div>
-                <div class =chart-wrapper>
-                  <moodChart />
+                <div class = "col">
+                  <div class =chart-wrapper pull-left>
+                    <moodChart />
+                  </div>
                 </div>
-            </div>
-
-
-
-            
-
+              </div>
 
       </div>
 
@@ -157,8 +152,8 @@
   </div>
     
 
-  
 </div>
+
 <body></body>
 
         
@@ -177,6 +172,9 @@ import moodChart from '../charts/MoodChart.vue';
 import todayMacros from './TodayMacros.vue';
 import todayStep from './TodaySteps.vue';
 import todayCalBurned from './TodaysCalorieBurn.vue';
+import shareNetworks from './ShareNet.vue';
+import currentWeight from './WeightGoals.vue';
+
 
 export default{
 
@@ -189,7 +187,9 @@ export default{
       todayMacros,
       todayCalBurned,
       SleepTrackChart,
-      moodChart
+      moodChart,
+      shareNetworks,
+      currentWeight
     },
 
     
@@ -216,23 +216,11 @@ export default{
   },
 
     async mounted(){
-      
-      //let workoutdata = await axios.get("http://127.0.0.1:5000/get_exercise/8").catch(function(error){
-      //  console.log(error);
-      //});
-      //let stepsdata = await axios.get("http://127.0.0.1:5000/steptracker_api/get_num_steps/8").catch(function(error){
-      //  console.log(error);
-      //});
-
-      
 
       let currentuser = localStorage.getItem('userId');
       this.currentName = localStorage.getItem('firstName');
 
       this.averageSleep = localStorage.getItem('sleep');
-      console.log("sleep: " + this.averageSleep);
-
-
 
       axios.get(`http://127.0.0.1:5000/get_exercise/${currentuser}`).then(response => this.workoutlist = response.data)
       
@@ -261,8 +249,9 @@ export default{
 
 .chart-wrapper {
  
-  height: 300px;
+  height: 400px;
   width: 600px;
+  border: 1px solid #ddd;
 }
 
 .top-buffer{margin-top:40px;}
@@ -270,4 +259,9 @@ export default{
 .tab {
         tab-size: 4;
     }
+
+.background-heading {
+background-color: lightblue; /* Use your preferred color code */
+}
+
 </style>

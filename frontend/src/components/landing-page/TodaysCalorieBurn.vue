@@ -10,7 +10,7 @@
     
         data(){
             return {
-                calBurned : null,
+                calBurned : 0,
             }
         },
         

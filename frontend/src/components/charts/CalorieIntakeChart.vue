@@ -1,5 +1,6 @@
 <template>
     <header>
+        <h5>Calorie Intake chart</h5>
         <h6>Your calorie, fat, carb, and protein intake over the past week</h6>
         <canvas id="calorieChart"></canvas>
     </header>

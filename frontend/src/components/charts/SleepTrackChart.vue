@@ -1,5 +1,6 @@
 <template>
     <header>
+        <h5>Sleep data chart</h5>
         <canvas id="sleepChart"></canvas>
     </header>
 </template>
@@ -60,9 +61,6 @@
                     listOfDates[7 - 1 - i] = dayToUse.toLocaleDateString();
                     dateLabels[7 - 1 - i] = dayToUse.toLocaleString('default', { month: 'long', day: 'numeric' })
                 }
-
-
-
 
                 for (let i in dataList) {
                     let packet = dataList[i];

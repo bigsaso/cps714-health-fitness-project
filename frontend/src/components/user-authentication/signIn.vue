@@ -49,6 +49,7 @@ export default {
 
         if (checkPassword(data.password, response.data.password, response.data.salt)) {
           localStorage.setItem('userId', response.data.userId);
+          localStorage.setItem('firstName',response.data.firstName);
           let link = document.createElement('a');
           link.href = "/dashboard";
           link.click();
