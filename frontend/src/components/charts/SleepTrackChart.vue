@@ -1,5 +1,6 @@
 <template>
     <header>
+        <h5>Sleep data chart</h5>
         <canvas id="sleepChart"></canvas>
     </header>
 </template>
@@ -58,8 +59,6 @@
                     dateLabels[7 - 1 - i] = dayToUse.toLocaleString('default', { month: 'long', day: 'numeric' })
                 }
 
-
-
                 for (let i in dataList) {
                     let packet = dataList[i];
                     let dataSendDate = new Date(packet[4]);
@@ -69,11 +68,6 @@ console.log("datasenddate: " + dataSendDate);
                     if (dataSendDate == null) {
                         continue;
                     }
-
-
-
-      
-
 
                     let formattedDataSendDate =  dataSendDate.getUTCFullYear() + "-" + (dataSendDate.getUTCMonth() + 1) + "-" +  ("0" + dataSendDate.getUTCDate()).slice(-2);
 
@@ -100,6 +94,7 @@ console.log("formatteddata: " + formattedDataSendDate);
                 dateLabels[6] = "Today (" + dateLabels[6] + ")";
                 sleepData.data.labels = dateLabels;
                 this.$emit('avgSleep', this.avgSleep);
+                localStorage.setItem("sleep",this.avgSleep);
             }
             const ctx = document.getElementById('sleepChart');
             new Chart(ctx, this.sleepData);

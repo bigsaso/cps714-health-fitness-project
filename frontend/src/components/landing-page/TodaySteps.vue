@@ -15,7 +15,7 @@ export default{
     },
     
     async mounted(){
-        let currentuser = localStorage.getItem('userId');
+    let currentuser = localStorage.getItem('userId');
     let userData = await axios.get(`http://127.0.0.1:5000/steptracker_api/get_num_steps/${currentuser}`).catch(function(error){
         console.log(error);
     });

@@ -1,5 +1,6 @@
 <template>
     <div>
+      <h5>Steps chart</h5>
       <h6>Your steps over the past week</h6>
       <canvas id="daily-steps"></canvas>
     </div>

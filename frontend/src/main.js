@@ -1,20 +1,15 @@
 import { createApp } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import VueSocialSharing from 'vue-social-sharing';
 
-//import 'bootstrap/dist/css/bootstrap.min.css'
-
-import VueSocialSharing from 'vue-social-sharing'
-
-import { library } from '@fortawesome/fontawesome-svg-core';
-
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faTwitter } from '@fortawesome/free-brands-svg-icons';
-
-
-library.add(faTwitter);
 
 
 import App from './App.vue'
+
+
+
+
+
 
 import MyLanding from './components/landing-page/Landing.vue';
 import DataInputPage from './components/data-input/DataInputPage.vue';
@@ -39,8 +34,7 @@ const app = createApp(App)
 
 app.use(router);
 app.use(VueSocialSharing);
-
-app.component(('font-awesome-icon', FontAwesomeIcon));
+ 
 app.mount('#app');
 
 

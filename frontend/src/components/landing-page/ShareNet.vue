@@ -1,9 +1,9 @@
 <template>
+  <h5>Share this website!</h5>
     <ShareNetwork
       v-for="network in networks"
       :network="network.network"
       :key="network.network"
-      :style="{backgroundColor: network.color}"
       :url="sharing.url"
       :title="sharing.title"
       :description="sharing.description"
@@ -33,19 +33,25 @@
           twitterUser: ''
         },
         networks: [
-          { network: 'facebook', name: 'Facebook', icon: 'fab fah fa-lg fa-facebook-f', color: '#1877f2' },
-          { network: 'linkedin', name: 'LinkedIn', icon: 'fab fah fa-lg fa-linkedin', color: '#007bb5' },
-          { network: 'reddit', name: 'Reddit', icon: 'fab fah fa-lg fa-reddit-alien', color: '#ff4500' },
-          { network: 'twitter', name: 'Twitter', icon: 'fa-brands fa-twitter', color: '#1da1f2' }
+          { network: 'facebook', name: 'Facebook', icon: 'fa-brandsfa-lg fa-facebook-f' },
+          { network: 'linkedin', name: 'LinkedIn', icon: 'fa-brands fa-lg fa-linkedin'},
+          { network: 'reddit', name: 'Reddit', icon: 'fa-brands fa-lg fa-reddit-alien'},
+          { network: 'twitter', name: 'Twitter', icon: 'fa-brands fa-twitter'}
         ],
-        networkicons:[
-          { network: 'facebook', name: 'Facebook', icon: 'fab fah fa-lg fa-facebook-f', color: '#1877f2' },
-          { network: 'linkedin', name: 'LinkedIn', icon: 'fab fah fa-lg fa-linkedin', color: '#007bb5' },
-          { network: 'reddit', name: 'Reddit', icon: 'fab fah fa-lg fa-reddit-alien', color: '#ff4500' },
-          { network: 'twitter', name: 'Twitter', icon: 'fa-brands fa-twitter', color: '#1da1f2' }
-
-        ]
       }
     }
-  }
+    //methods:{
+     // getFontAwesomeIcon(network){
+      //  const iconMap ={
+        //  facebook : 'fa-brands fa-lg fa-facebook-f',
+          //linkedin : 'fa-brands fa-lg fa-linkedin',
+          //reddit : 'fa-brands fa-lg fa-reddit-alien',
+          //twitter : 'fa-brands fa-lg fa-twitter'
+        //};
+     //   return iconMap[network] || 'fas fa-lg fa-question';
+      //}
+
+
+   // }
+  };
   </script>

@@ -3,8 +3,8 @@
     <!-- Weight progress bar -->
     <div class="container">
     <div class="panel panel-default">
-  <div class="panel-heading"><dt>Current progress : {{currentWeight}}lbs/{{goalWeight}}lbs</dt></div>
-  <h6>Keep it up, your <dt>{{ weightPercentage }}%</dt> away from completing your goal!</h6>
+  <div class="class=flex-container"><p>Current progress : {{currentWeight}}lbs/{{goalWeight}}lbs</p></div>
+  <p>Keep it up, your {{ weightPercentage }}% away from completing your goal!</p>
     </div>
   </div>
  

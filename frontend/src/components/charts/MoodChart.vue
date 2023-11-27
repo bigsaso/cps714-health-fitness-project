@@ -1,5 +1,6 @@
 <template>
     <header>
+        <h5>Mood chart</h5>
         <h6>Your mood over the past week</h6>
         <canvas id="moodChart"></canvas>
     </header>
