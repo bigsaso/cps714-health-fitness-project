@@ -36,10 +36,12 @@
 
             });
 
-            
+            console.log("userdata: "  + userData)
             if (userData != undefined) {
                 let dataList = userData.data; //list of data for user n
+                console.log("datalist: " + dataList);
                 let datasets = sleepData.data.datasets;
+                console.log("datasetssss: " + datasets);
                 datasets[0].data = [0, 0, 0, 0, 0, 0, 0];
          
 
@@ -53,6 +55,7 @@
                 let listOfDates = [];
                 let dateLabels = [];
            
+
                 for (let i = 0; i < 7; i++) {
                     let dayToUse = today.subtractDays(i);
                     listOfDates[7 - 1 - i] = dayToUse.toLocaleDateString();
@@ -69,7 +72,12 @@ console.log("datasenddate: " + dataSendDate);
                         continue;
                     }
 
-                    let formattedDataSendDate =  dataSendDate.getUTCFullYear() + "-" + (dataSendDate.getUTCMonth() + 1) + "-" +  ("0" + dataSendDate.getUTCDate()).slice(-2);
+
+
+      
+
+
+                    let formattedDataSendDate = (dataSendDate.getUTCMonth() + 1) + "/" + dataSendDate.getUTCDate() + "/" + dataSendDate.getUTCFullYear();
 
 
 
@@ -80,11 +88,14 @@ console.log("formatteddata: " + formattedDataSendDate);
                     let index = listOfDates.indexOf(formattedDataSendDate);
 
 
-       console.log("index: " + index);
+  console.log("index: " + index);
+  console.log("datsets: " +  packet[1]);
 
 
+ 
                     if (index != -1) {
                         datasets[0].data[index] += packet[1]; //sleep
+                    
                        this.sum += parseFloat(packet[1]);
                        this.avgSleep = this.sum / (index+1);
                     }
@@ -93,7 +104,8 @@ console.log("formatteddata: " + formattedDataSendDate);
                 dateLabels[5] = "Yesterday (" + dateLabels[5] + ")";
                 dateLabels[6] = "Today (" + dateLabels[6] + ")";
                 sleepData.data.labels = dateLabels;
-                this.$emit('avgSleep', this.avgSleep);
+                
+                console.log("avgsleep: ", this.avgSleep);
                 localStorage.setItem("sleep",this.avgSleep);
             }
             const ctx = document.getElementById('sleepChart');

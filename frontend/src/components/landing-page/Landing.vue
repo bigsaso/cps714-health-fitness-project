@@ -80,7 +80,7 @@
               <!-- Sleep average data -->
               <div class = "col border">
                 <h4>Hours slept average</h4>
-                <p>{{this.averageSleep}} hours</p>
+                <p>{{this.averageSleep}} hours</p> 
               </div>
 
               <!-- Macronutrient data  -->
@@ -199,6 +199,7 @@ export default{
         workoutlist : [],
         averageSleep: 0, // Add this property to store the average sleep data
         currentName : '',
+    
 
       };
     },
