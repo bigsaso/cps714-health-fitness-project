@@ -1,11 +1,13 @@
 <template>
-  <h5>Share this website!</h5>
+  <template v-if="weightPercentage == 100">
+      <h5>Share your achievement!</h5>
+
     <ShareNetwork
       v-for="network in networks"
       :network="network.network"
       :key="network.network"
       :url="sharing.url"
-      :title="sharing.title"
+      :title="computedTitle"
       :description="sharing.description"
       :quote="sharing.quote"
       :hashtags="sharing.hashtags"
@@ -16,17 +18,24 @@
       <span>{{ network.name }}</span>
     </ShareNetwork>
   </template>
+    <template v-else>
+        <h4>Share</h4>
+        <p>Share will only be avaible after hitting your weight goal!</p>
+
+    </template>
+  </template>
   
 
   <script>
   
   export default {
     name:"shareNetworks",
+    props: ['weightPercentage','goalWeight'],
     data () {
       return {
         sharing: {
           url: 'my.ryerson.ca',
-          title: 'With this health and fitness website, I was able to track my health and set my goals!',
+          title: "`With this health fitness website, I was able to hit my weight goal of ${goalWeight}`",
           description: 'This site is amazing! You guys got to check this out! Its simple to sign up and displays everything you need!',
           quote: '',
           hashtags: 'health,fitness,tmu',
@@ -38,20 +47,16 @@
           { network: 'reddit', name: 'Reddit', icon: 'fa-brands fa-lg fa-reddit-alien'},
           { network: 'twitter', name: 'Twitter', icon: 'fa-brands fa-twitter'}
         ],
+        //weightPercentage: localStorage.getItem('goal'),
       }
-    }
-    //methods:{
-     // getFontAwesomeIcon(network){
-      //  const iconMap ={
-        //  facebook : 'fa-brands fa-lg fa-facebook-f',
-          //linkedin : 'fa-brands fa-lg fa-linkedin',
-          //reddit : 'fa-brands fa-lg fa-reddit-alien',
-          //twitter : 'fa-brands fa-lg fa-twitter'
-        //};
-     //   return iconMap[network] || 'fas fa-lg fa-question';
-      //}
+
+    },
+    computed: {
+    computedTitle() {
+      return `With this health fitness website, I was able to hit my weight goal of ${this.goalWeight}lb`;
+    },
+  },
 
 
-   // }
   };
   </script>
