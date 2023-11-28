@@ -258,7 +258,7 @@ export default{
         this.currentWeight = weightList
         
 
-        if(this.currentWeight == this.goalWeight){
+        if(this.currentWeight == this.goalWeight && this.currentWeight !=0 && this.goalWeight!=0){
           this.weightPercentage = 100;
 
         }
