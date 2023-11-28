@@ -1,7 +1,7 @@
 <template>
   <template v-if="weightPercentage === 100">
       <h5>Share your achievement!</h5>
-
+      <div @click="handleShareClick" style="display: flex; flex-direction: column;">
     <ShareNetwork
       v-for="network in networks"
       :network="network.network"
@@ -17,6 +17,7 @@
       <i :class="network.icon"></i>
       <span>{{ network.name }}</span>
     </ShareNetwork>
+  </div>
   </template>
     <template v-else>
         <h4>Share</h4>
@@ -54,6 +55,12 @@
     computed: {
     computedTitle() {
       return `With this health fitness website, I was able to hit my weight goal of ${this.goalWeight}lb`;
+    },
+  },
+  methods: {
+    handleShareClick() {
+      // Emit an event named 'shareClicked'
+      this.$emit('shareClicked');
     },
   },
 
