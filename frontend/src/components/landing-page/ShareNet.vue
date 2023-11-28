@@ -1,5 +1,5 @@
 <template>
-  <template v-if="weightPercentage == 100">
+  <template v-if="weightPercentage === 100">
       <h5>Share your achievement!</h5>
 
     <ShareNetwork
