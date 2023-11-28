@@ -27,6 +27,7 @@
         for(let i in dataList){
             let packet = dataList[i];
             let current = new Date(packet[4]);
+            console.log("dsadas");
             let currentCompare = (current.getUTCMonth() + 1) + "/" + current.getUTCDate() + "/" + current.getUTCFullYear();
             if(currentCompare == todayFormatted){
                 this.calBurned = packet[2];
