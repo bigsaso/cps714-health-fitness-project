@@ -18,6 +18,7 @@
                 sleepData: sleepData,
                 avgSleep : 0,
                 sum:0,
+                i : 0,
                 userId: null
             }
         },
@@ -97,8 +98,12 @@ console.log("formatteddata: " + formattedDataSendDate);
                         datasets[0].data[index] += packet[1]; //sleep
                     
                        this.sum += parseFloat(packet[1]);
-                       this.avgSleep = this.sum / (index+1);
+                       this.i++;
+                       
                     }
+                    console.log("packet: " + packet[1])
+                    this.avgSleep = (this.sum / this.i);
+                    console.log("i: " + this.i);
                 }
 
                 dateLabels[5] = "Yesterday (" + dateLabels[5] + ")";

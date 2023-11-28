@@ -85,8 +85,7 @@
 
               <!-- Sleep average data -->
               <div class = "col border">
-                <h4>Hours slept average</h4>
-                <p>{{this.averageSleep}} hours</p> 
+                    <AvgSleeping/>
               </div>
 
               <!-- Macronutrient data  -->
@@ -178,6 +177,7 @@ import moodChart from '../charts/MoodChart.vue';
 import todayMacros from './TodayMacros.vue';
 import todayStep from './TodaySteps.vue';
 import todayCalBurned from './TodaysCalorieBurn.vue';
+import AvgSleeping from './AvgSleeping.vue';
 import shareNetworks from './ShareNet.vue';
 
 
@@ -194,6 +194,7 @@ export default{
       SleepTrackChart,
       moodChart,
       shareNetworks,
+      AvgSleeping
     },
 
     
