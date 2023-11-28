@@ -23,7 +23,7 @@
 
         
           <div class = "top-buffer"></div>
-          <shareNetworks :weightPercentage="weightPercentage" :goalWeight = "goalWeight" />
+          <shareNetworks :weightPercentage="weightPercentage" :goalWeight = "goalWeight" @shareClicked="refreshMainPage" />
       
 
         <li class="nav-item">
@@ -182,6 +182,14 @@ import shareNetworks from './ShareNet.vue';
 
 
 export default{
+
+    methods: {
+      refreshMainPage() {
+        // Implement the logic to refresh the main page
+        // For example, you can reload the page using window.location.reload()
+        window.location.reload();
+      },
+    },
 
     name:'MyLanding', 
     components:{
