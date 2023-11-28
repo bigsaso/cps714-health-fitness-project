@@ -259,33 +259,24 @@ export default{
         
 
 
-        if(this.currentWeight<=this.goalWeight){
+        if(this.currentWeight<this.goalWeight){
           let progressCalc = Math.round((this.currentWeight/this.goalWeight)*100);
           this.weightPercentage = progressCalc
-          localStorage.setItem("goal",this.weightPercentage);
         }
         else if(this.currentWeight>this.goalWeight){
           if(this.goalWeight == 0){
             this.weightPercentage = 0;
-            localStorage.setItem("goal",this.weightPercentage);
           }
           else{
           let progressCalc = Math.round(((this.currentWeight-this.goalWeight)/this.currentWeight)*100);
           this.weightPercentage = 100 - progressCalc;
-          localStorage.setItem("goal",this.weightPercentage);
           }
           
         }
-     console.log(localStorage.getItem('goal'))
+     
 
     },
     
-
-
-    create(){
-      this.weightPercentage = localStorage.getItem("goal");
-      this.mounted();
-    },
     
 } 
 
